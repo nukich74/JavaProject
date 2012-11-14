@@ -1,5 +1,6 @@
 package ru.fizteh.fivt.orlovNikita.format.MyPack;
 
+import ru.fizteh.fivt.orlovNikita.format.StandartPack.FormatterException;
 import ru.fizteh.fivt.orlovNikita.format.StandartPack.StringFormatterExtension;
 
 import java.util.Formatter;
@@ -19,11 +20,12 @@ public class BigIntegerStringFormatterExtention extends StringFormatterExtension
 
     @Override
     public void format(StringBuilder buffer, Object o, String pattern) {
-        buffer = new StringBuilder();
-        if (pattern == null || pattern.equals("")) {
-            buffer.append(o.toString());
+        if (o == null) {
+            throw new FormatterException("Got null object");
+        } else if (!this.supports(o.getClass())) {
+            throw new FormatterException("Don't support class: " + o.getClass().getName());
         } else {
-            buffer.append((new Formatter()).format(pattern, o));
+            buffer.append((new Formatter()).format(pattern, o).toString());
         }
     }
 }
