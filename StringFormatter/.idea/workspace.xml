@@ -9,26 +9,16 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/src/ru/fizteh/fivt/orlovNikita/Utils/MessageType.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/src/ru/fizteh/fivt/orlovNikita/Utils/MessageUtils.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/src/ru/fizteh/fivt/orlovNikita/clientPack/ClientManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/StringFormatterJUnitTest.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Thread/.idea/ant.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Thread/src/B.java" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../Chat/src/ServerPack/ServerManager.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../Chat/src/clientPack/ClientManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/TestClass.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/Main.java" afterPath="$PROJECT_DIR$/../Thread/src/A.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Chat/.idea/misc.xml" afterPath="$PROJECT_DIR$/../Chat/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Chat/.idea/vcs.xml" afterPath="$PROJECT_DIR$/../Chat/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Chat/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Chat/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Parallel Sort/.idea/vcs.xml" afterPath="$PROJECT_DIR$/../Parallel Sort/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Parallel Sort/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Parallel Sort/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/acer.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/acer.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/StringFormatter.iml" afterPath="$PROJECT_DIR$/StringFormatter.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/BigIntegerStringFormatterExtention.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/BigIntegerStringFormatterExtention.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/FloatStringFormatterExtention.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/FloatStringFormatterExtention.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/StringFormatter.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/StringFormatter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/StringFormatterFactory.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/format/MyPack/StringFormatterFactory.java" />
     </list>
     <ignored path="StringFormatter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -670,7 +660,11 @@
       <created>1352853695177</created>
       <updated>1352853695177</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="StringFormatter done, added tests. All pretested.">
+      <created>1353165427540</created>
+      <updated>1353165427540</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -757,7 +751,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="StringFormatter part written 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="StringFormatter done, added tests. All pretested." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -772,6 +766,7 @@
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="StringFormatter part written" />
     <MESSAGE value="StringFormatter part written 2" />
+    <MESSAGE value="StringFormatter done, added tests. All pretested." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
