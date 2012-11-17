@@ -3,14 +3,15 @@ package ru.fizteh.fivt.orlovNikita.format.MyPack;
 import ru.fizteh.fivt.orlovNikita.format.StandartPack.FormatterException;
 import ru.fizteh.fivt.orlovNikita.format.StandartPack.StringFormatterExtension;
 
-import java.util.TreeSet;
+import java.util.ArrayList;
+
 
 class StringFormatter implements ru.fizteh.fivt.orlovNikita.format.StandartPack.StringFormatter {
 
-    TreeSet<StringFormatterExtension> formatterExtensions;
+    ArrayList<StringFormatterExtension> formatterExtensions;
 
-    StringFormatter() {
-        formatterExtensions = new TreeSet<StringFormatterExtension>();
+    public StringFormatter() {
+        formatterExtensions = new ArrayList<StringFormatterExtension>();
     }
 
     public void insertExtention(StringFormatterExtension extension) {
@@ -34,18 +35,29 @@ class StringFormatter implements ru.fizteh.fivt.orlovNikita.format.StandartPack.
 
     private StringBuilder processObject(String format, Object... args) {
         String pattern;
-        StringBuilder res = null;
+        StringBuilder res = new StringBuilder();
         int patternStartIndex = 0;
+
+
         if (!format.matches("[0-9][0-9]*(\\..*)*(:.+)?")) {
             throw new FormatterException("Bad format of replacing pattern");
         } else {
             while ((patternStartIndex < format.length()) && (format.charAt(patternStartIndex) != ':')) {
                 patternStartIndex++;
             }
-            pattern = format.substring(patternStartIndex + 1, format.length());
-            String[] fieldArray = format.substring(0, patternStartIndex - 1).split("\\.");
+            if (patternStartIndex == format.length()) {
+                pattern = null;
+            } else {
+                pattern = format.substring(patternStartIndex + 1, format.length());
+            }
+
+            String[] fieldArray = format.substring(0, patternStartIndex).split("\\.");
             if (!fieldArray[0].matches("[0-9][0-9]*")) {
                 throw new FormatterException("Argument object is not number");
+            }
+
+            if (Integer.valueOf(fieldArray[0]) > args.length) {
+                throw new FormatterException("Not enougth params or error in index in pattern");
             }
 
             Object object = args[Integer.valueOf(fieldArray[0])];
@@ -54,8 +66,9 @@ class StringFormatter implements ru.fizteh.fivt.orlovNikita.format.StandartPack.
                     object = object.getClass().getDeclaredField(fieldArray[i]).get(object);
                 }
             } catch (Exception e) {
-                throw new FormatterException("No such field in class: " + object.getClass().getName());
+                throw new FormatterException("Field is private or no such field in class: " + object.getClass().getName());
             }
+
             if (pattern != null) {
                 boolean haveExtention = false;
                 for (StringFormatterExtension extension : formatterExtensions) {
@@ -65,11 +78,12 @@ class StringFormatter implements ru.fizteh.fivt.orlovNikita.format.StandartPack.
                         haveExtention = true;
                     }
                 }
-                if (!haveExtention || res == null) {
+                if ((!haveExtention) || (res == null)) {
                     throw new FormatterException("Don't have extention");
                 }
             } else {
-                res.append(object.toString());
+                String s = object.toString();
+                res.append(s);
             }
         }
         return res;
@@ -78,13 +92,14 @@ class StringFormatter implements ru.fizteh.fivt.orlovNikita.format.StandartPack.
 
     private StringBuilder parseString(StringBuilder builder, String input, Object... args) {
         try {
-            for (int i = 0; i - 1 < input.length(); i++) {
+            for (int i = 0; i < input.length(); i++) {
                 if (input.charAt(i) == '{') {
                     if (input.charAt(i + 1) == '{') {
                         builder.append("{");
                         i++;
                     } else {
                         String arg = "";
+                        i++;
                         while (input.charAt(i) != '}') {
                             arg += input.charAt(i);
                             i++;
@@ -98,6 +113,8 @@ class StringFormatter implements ru.fizteh.fivt.orlovNikita.format.StandartPack.
                     } else {
                         throw new FormatterException("Bad format pattern");
                     }
+                } else {
+                    builder.append(input.charAt(i));
                 }
             }
         } catch (Exception e) {
@@ -106,4 +123,14 @@ class StringFormatter implements ru.fizteh.fivt.orlovNikita.format.StandartPack.
 
         return builder;
     }
+
+    public boolean containsExtention(Class clazz) {
+        for (StringFormatterExtension extension : formatterExtensions) {
+            if (extension.supports(clazz)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
