@@ -1,5 +1,7 @@
 package ru.fizteh.fivt.bind.myPack;
 
+import java.lang.annotation.Annotation;
+
 /**
  * Package: ru.fizteh.fivt.bind.myPack
  * User: acer
@@ -14,6 +16,11 @@ public class XmlBinder extends ru.fizteh.fivt.bind.defPack.XmlBinder {
 
     @Override
     public byte[] serialize(Object value) {
+        Class valueClass = value.getClass();
+        Annotation[] annArray = valueClass.getAnnotations();
+        for (int i = 0; i < annArray.length; i++) {
+
+        }
         return new byte[0];
     }
 
