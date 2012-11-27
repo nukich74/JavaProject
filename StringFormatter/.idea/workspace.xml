@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aae2e3ee-5ebe-4f0c-9534-bc4ddccb9cc9" name="Default" comment="StringFormatter part written">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/.idea/ant.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/.idea/dictionaries/acer.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/src/ru/fizteh/fivt/orlovNikita/ServerPack/ServerManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/src/ru/fizteh/fivt/orlovNikita/Utils/ChatException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/src/ru/fizteh/fivt/orlovNikita/Utils/MessageType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/src/ru/fizteh/fivt/orlovNikita/Utils/MessageUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Chat/src/ru/fizteh/fivt/orlovNikita/clientPack/ClientManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Thread/.idea/ant.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Thread/src/B.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../Chat/src/ServerPack/ServerManager.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../Chat/src/clientPack/ClientManager.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Chat/.idea/misc.xml" afterPath="$PROJECT_DIR$/../Chat/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Chat/.idea/vcs.xml" afterPath="$PROJECT_DIR$/../Chat/.idea/vcs.xml" />
+    <list default="true" id="aae2e3ee-5ebe-4f0c-9534-bc4ddccb9cc9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Chat/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Chat/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Parallel Sort/.idea/vcs.xml" afterPath="$PROJECT_DIR$/../Parallel Sort/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Parallel Sort/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Parallel Sort/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="StringFormatter.iws" />
@@ -664,7 +649,11 @@
       <created>1353165427540</created>
       <updated>1353165427540</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Test Commit">
+      <created>1353165580139</created>
+      <updated>1353165580139</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -751,7 +740,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="StringFormatter done, added tests. All pretested." />
+    <option name="LAST_COMMIT_MESSAGE" value="Test Commit" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -767,6 +756,7 @@
     <MESSAGE value="StringFormatter part written" />
     <MESSAGE value="StringFormatter part written 2" />
     <MESSAGE value="StringFormatter done, added tests. All pretested." />
+    <MESSAGE value="Test Commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />

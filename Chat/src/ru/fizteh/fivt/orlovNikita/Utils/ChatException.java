@@ -6,6 +6,9 @@ package ru.fizteh.fivt.orlovNikita.Utils;
  * Date: 17.11.12
  * Time: 17:47
  */
-public class ChatException {
+public class ChatException extends Exception {
+    ChatException() {
+
+    }
 
 }
