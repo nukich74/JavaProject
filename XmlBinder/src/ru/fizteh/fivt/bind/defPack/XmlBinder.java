@@ -1,5 +1,9 @@
 package ru.fizteh.fivt.bind.defPack;
 
+import ru.fizteh.fivt.bind.myPack.XmlBinderException;
+
+import javax.xml.stream.XMLStreamException;
+
 /**
  * Наследники класса должны быть потокобезопасными.
  *
@@ -19,5 +23,5 @@ public abstract class XmlBinder<T> {
 
     public abstract byte[] serialize(T value);
 
-    public abstract T deserialize(byte[] bytes);
+    public abstract T deserialize(byte[] bytes) throws XMLStreamException, XmlBinderException;
 }

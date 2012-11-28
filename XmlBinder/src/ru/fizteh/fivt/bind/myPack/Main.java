@@ -3,8 +3,6 @@ package ru.fizteh.fivt.bind.myPack;
 import ru.fizteh.fivt.bind.defPack.BindingType;
 import ru.fizteh.fivt.bind.defPack.MembersToBind;
 
-import java.lang.annotation.Annotation;
-
 /**
  * Package: ru.fizteh.fivt.bind.myPack
  * User: acer
@@ -18,10 +16,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main mainer = new Main();
-        Class clazz = mainer.getClass();
-        Annotation aaa = clazz.getAnnotation(ru.fizteh.fivt.bind.defPack.BindingType.class);
-        BindingType qwe = (BindingType) aaa;
-        MembersToBind val = qwe.value();
+
     }
 }
