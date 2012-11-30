@@ -21,7 +21,7 @@ public abstract class XmlBinder<T> {
         return clazz;
     }
 
-    public abstract byte[] serialize(T value);
+    public abstract byte[] serialize(T value) throws Exception;
 
     public abstract T deserialize(byte[] bytes) throws XMLStreamException, XmlBinderException;
 }

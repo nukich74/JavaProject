@@ -11,4 +11,8 @@ public class XmlBinderException extends Exception {
     public XmlBinderException(Exception e) {
         super(e);
     }
+
+    public XmlBinderException(String s) {
+        super(s);
+    }
 }
