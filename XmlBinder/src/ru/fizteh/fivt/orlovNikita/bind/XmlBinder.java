@@ -66,7 +66,6 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.XmlBinder {
                     ///       streamWriter.close();
                 }
             }
-            System.out.println(strWriter.toString());
             return strWriter.toString().getBytes();
         }
     }
@@ -170,8 +169,6 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.XmlBinder {
         } else {
             try {
                 Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteInputStream(bytes, bytes.length));
-                String s = (String.valueOf(document.getDocumentElement().getTagName().charAt(0)).toUpperCase() + document.getDocumentElement().getTagName().substring(1));
-                String s2 = this.getClass().getSimpleName();
                 if (!(String.valueOf(document.getDocumentElement().getTagName().charAt(0)).toUpperCase() + document.getDocumentElement().getTagName().substring(1)).
                         equals(this.getClazz().getSimpleName())) {
                     throw new RuntimeException("Can't deserialize this Xml, because of the not equal types");
@@ -202,7 +199,7 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.XmlBinder {
         Object finalObj = null;
         try {
             finalObj = newInstance(clazz);
-            BindingType type = clazz.getClass().getAnnotation(BindingType.class);
+            BindingType type = (BindingType) clazz.getAnnotation(BindingType.class);
             NodeList nodeList = documentElement.getChildNodes();
             if (nodeList == null) {
                 throw new RuntimeException("No such classes to deserialize");
@@ -222,7 +219,7 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.XmlBinder {
                 }
             } else {
                 HashMap<String, Method[]> methodMap = classUtil.getMethodTable(clazz);
-                if (methodMap != null) {
+                if (methodMap == null) {
                     throw new RuntimeException("No structure for class");
                 }
                 for (int i = 0; i < nodeList.getLength(); i++) {
