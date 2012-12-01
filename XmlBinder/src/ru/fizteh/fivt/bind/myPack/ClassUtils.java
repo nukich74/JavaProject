@@ -3,10 +3,14 @@ package ru.fizteh.fivt.bind.myPack;
 import ru.fizteh.fivt.bind.defPack.BindingType;
 import ru.fizteh.fivt.bind.defPack.MembersToBind;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Package: ru.fizteh.fivt.bind.myPack
@@ -15,13 +19,11 @@ import java.util.*;
  * Time: 23:53
  */
 public class ClassUtils {
-    Class clazz;
-    HashMap<Class, HashMap<String, Field>> fieldMap;
-    HashMap<Class, HashMap<String, Method[]>> methodMap;
-    HashMap<String, Constructor> constructorMap;
-    HashSet<Class> readyClasses;
-
-    IdentityHashMap<Object, Integer> linkMap;
+    private Class clazz;
+    private HashMap<Class, HashMap<String, Field>> fieldMap;
+    private HashMap<Class, HashMap<String, Method[]>> methodMap;
+    private HashMap<String, Constructor> constructorMap;
+    private HashSet<Class> readyClasses;
 
     ClassUtils(Class clzz) {
         this.clazz = clzz;
@@ -46,6 +48,7 @@ public class ClassUtils {
     private void classPrepare(Class clzz) {
         constructorMap.put(clzz.getName(), this.getConstructor(clzz));
         if (!readyClasses.contains(clzz)) {
+            readyClasses.add(clzz);
             boolean fieldBind = false;
             BindingType type = (BindingType) clzz.getAnnotation(BindingType.class);
             if (type == null || type.value().equals(MembersToBind.FIELDS)) {
@@ -66,11 +69,11 @@ public class ClassUtils {
             } else {
                 ArrayList<Method[]> methods = getMethodArray(clzz);
                 HashMap<String, Method[]> tempMap = new HashMap<String, Method[]>();
-                for (Method[] pair: methods) {
+                for (Method[] pair : methods) {
                     tempMap.put(pair[0].getName().replaceFirst("set", ""), pair);
                 }
                 methodMap.put(clzz, tempMap);
-                for (Method[] pair: methods) {
+                for (Method[] pair : methods) {
                     classPrepare(pair[0].getReturnType());
                 }
             }
@@ -83,8 +86,8 @@ public class ClassUtils {
     private ArrayList<Field> getFieldsArray(Class clazz) {
         ArrayList<Field> arrayList = new ArrayList<Field>();
         while (clazz != null) {
-            arrayList.addAll(Arrays.asList(clazz.getFields()));
-            clazz.getSuperclass();
+            arrayList.addAll(Arrays.asList(clazz.getDeclaredFields()));
+            clazz = clazz.getSuperclass();
         }
         return arrayList;
     }
@@ -97,32 +100,55 @@ public class ClassUtils {
                 if (method.getParameterTypes().length != 1 || method.getReturnType().equals(void.class)) {
                     continue;
                 }
-            }
-            try {
-                Method getMethod = clazz.getMethod(method.getName().replaceFirst("set", "get"));
-                if (getMethod.getReturnType().equals(method.getParameterTypes()[0])) {
-                    arrayList.add(new Method[]{method, getMethod});
-                    arrayList.get(arrayList.size() - 1)[0].setAccessible(true);
-                    arrayList.get(arrayList.size() - 1)[1].setAccessible(true);
-                    continue;
+
+                try {
+                    Method getMethod = clazz.getMethod(method.getName().replaceFirst("set", "get"));
+                    getMethod.setAccessible(true);
+                    if (getMethod.getReturnType().equals(method.getParameterTypes()[0])) {
+                        arrayList.add(new Method[]{method, getMethod});
+                        arrayList.get(arrayList.size() - 1)[0].setAccessible(true);
+                        arrayList.get(arrayList.size() - 1)[1].setAccessible(true);
+                        continue;
+                    }
+                    Method isMethod = clazz.getMethod(method.getName().replaceFirst("set", "is"));
+                    isMethod.setAccessible(true);
+                    if ((isMethod.getReturnType().equals(method.getTypeParameters()[0])) &&
+                            (isMethod.getReturnType().equals(Boolean.class)) &&
+                            (method.getParameterTypes()[0].equals(Boolean.class))) {
+                        arrayList.add(new Method[]{method, isMethod});
+                        arrayList.get(arrayList.size() - 1)[0].setAccessible(true);
+                        arrayList.get(arrayList.size() - 1)[1].setAccessible(true);
+                        continue;
+                    }
+                    throw new NoSuchMethodException();
+                } catch (NoSuchMethodException e) {
+                    //Can't understand what to write here, because I prevent any exceptions, but I really need to catch (NSME e)
+                    //But don't need to announce it, this occasion is normal;
                 }
-                Method isMethod = clazz.getMethod(method.getName().replaceFirst("set", "is"));
-                if ((isMethod.getReturnType().equals(method.getTypeParameters()[0])) &&
-                        (isMethod.getReturnType().equals(Boolean.class)) &&
-                        (method.getParameterTypes()[0].equals(Boolean.class))) {
-                    arrayList.add(new Method[]{method, isMethod});
-                    arrayList.get(arrayList.size() - 1)[0].setAccessible(true);
-                    arrayList.get(arrayList.size() - 1)[1].setAccessible(true);
-                    continue;
-                }
-                throw new NoSuchMethodException();
-            } catch (NoSuchMethodException e) {
-                //Can't understand what to write here, because I prevent any exceptions, but I really need to catch (NSME e)
-                //But don't need to announce it, this occasion is normal;
             }
         }
 
         return arrayList;
+    }
+
+    public HashMap<String, Field> getFieldsTable(Class clazz) {
+        if (!this.fieldMap.containsKey(clazz)) {
+            return null;
+        } else {
+            return this.fieldMap.get(clazz);
+        }
+    }
+
+    public HashMap<String, Method[]> getMethodTable() {
+        if (!this.methodMap.containsKey(clazz)) {
+            return null;
+        } else {
+            return this.methodMap.get(clazz);
+        }
+    }
+
+    boolean hasAnnotation(Object obj, Annotation annotation) {
+        return (obj.getClass().getAnnotation(annotation.getClass()) != null);
     }
 
 }

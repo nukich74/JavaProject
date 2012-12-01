@@ -1,11 +1,13 @@
 package ru.fizteh.fivt.bind.myPack;
 
+import ru.fizteh.fivt.bind.defPack.AsXmlAttribute;
 import ru.fizteh.fivt.bind.defPack.AsXmlCdata;
 import ru.fizteh.fivt.bind.defPack.BindingType;
 import ru.fizteh.fivt.bind.defPack.MembersToBind;
 import sun.misc.Unsafe;
 
 import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
@@ -20,7 +22,7 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
     private Unsafe unsafe;
     private ClassUtils classUtil;
 
-    protected XmlBinder(Class clazz) {
+    public XmlBinder(Class<T> clazz) {
         super(clazz);
         classUtil = new ClassUtils(clazz);
         try {
@@ -33,16 +35,20 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
     }
 
     @Override
-    public byte[] serialize(Object value) throws Exception {
+    public byte[] serialize(Object value) {
         if (value == null || !value.getClass().equals(getClazz())) {
             throw new RuntimeException("Can't serialise because value isn't correct");
         } else {
             IdentityHashMap<Object, Integer> usedLinks = new IdentityHashMap<Object, Integer>();
             StringWriter strWriter = new StringWriter();
-            XMLStreamWriter streamWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(strWriter);
-            streamWriter.writeStartElement(value.getClass().getName());
+            XMLStreamWriter streamWriter = null;
+            try {
+                streamWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(strWriter);
+            } catch (XMLStreamException e) {
+                System.err.print("Can't create streamWriter. Error\n");
+                return null;
+            }
             serialize(value, streamWriter, usedLinks);
-            streamWriter.writeEndElement();
             return strWriter.toString().getBytes();
         }
     }
@@ -54,38 +60,41 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
                 clazz.equals(Long.class) || clazz.equals(Float.class);
     }
 
+
     private void serialize(Object value, XMLStreamWriter streamWriter, IdentityHashMap<Object, Integer> usedLinks) {
         try {
-            if (value == null || usedLinks.containsKey(value)) {
+            if (value == null) {
                 return;
+            }
+            if (usedLinks.containsKey(value)) {
+                throw new RuntimeException("Can't serialize because of the links!");
             } else {
-                BindingType type = ((BindingType) value.getClass().getAnnotation(BindingType.class));
-                if (isWrapperOrPrimitive(value.getClass())) {
-                    streamWriter.writeCharacters(value.toString());
-                } else if ((type.equals(MembersToBind.FIELDS)) || (type == null)) {
-                    for (Map.Entry<String, Field> entry : classFieldMap.get(value.getClass()).entrySet()) {
+                usedLinks.put(value, 1);
+            }
+            if (isWrapperOrPrimitive(value.getClass())) {
+                streamWriter.writeCharacters(value.toString());
+            } else {
+                streamWriter.writeStartElement(value.getClass().getName());
+                BindingType type = value.getClass().getAnnotation(BindingType.class);
+                if ((type.value().equals(MembersToBind.FIELDS)) || (type == null)) {
+                    for (Map.Entry<String, Field> entry : classUtil.getFieldsTable(value.getClass()).entrySet()) {
                         Object newValue = entry.getValue().get(value);
-                        if (isWrapperOrPrimitive(newValue.getClass())) {
-                            if (newValue.getClass().getAnnotation(AsXmlCdata.class) != null) {
-                                streamWriter.writeStartElement(entry.getKey());
-                                streamWriter.writeCData(newValue.toString());
-                                streamWriter.writeEndElement();
-                            } /*TODO else if (newValue.getClass().getAnnotation(AsXmlAttribute.class) != null) {
-                                streamWriter.writeStartElement(entry.getValue().getName());
-                                streamWriter.writeAttribute(entry.getKey(), newValue.toString());
-                                serialize(newValue, streamWriter, usedLinks);
-                            } */ else {
-                                streamWriter.writeStartElement(entry.getKey());
-                                serialize(newValue, streamWriter, usedLinks);
-                                streamWriter.writeEndElement();
-                            }
+                        //Забыл добавить учет примитива
+                        if (entry.getValue().getAnnotation(AsXmlCdata.class) != null) {
+                            streamWriter.writeStartElement(entry.getKey());
+                            streamWriter.writeCData(newValue.toString());
+                            streamWriter.writeEndElement();
+                        } else if (entry.getValue().getAnnotation(AsXmlAttribute.class) != null) {
+                            //TODO Не обязательное задание
                         } else {
-
+                            streamWriter.writeStartElement(entry.getKey());
+                            serialize(newValue, streamWriter, usedLinks);
+                            streamWriter.writeEndElement();
                         }
                     }
-                } else {
-
                 }
+
+                streamWriter.writeEndElement();
             }
         } catch (Exception e) {
             throw new RuntimeException("Error while serializing object: " + value.getClass().getCanonicalName());
@@ -93,8 +102,9 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
 
     }
 
+
     @Override
-    public Object deserialize(byte[] bytes) throws XmlBinderException {
+    public Object deserialize(byte[] bytes) {
         return null;
     }
 }
