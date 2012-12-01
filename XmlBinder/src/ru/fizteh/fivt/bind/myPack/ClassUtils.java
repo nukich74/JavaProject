@@ -97,7 +97,7 @@ public class ClassUtils {
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {
             if (method.getName().matches("set.+")) {
-                if (method.getParameterTypes().length != 1 || method.getReturnType().equals(void.class)) {
+                if (method.getParameterTypes().length != 1 || !method.getReturnType().equals(void.class)) {
                     continue;
                 }
 
@@ -110,11 +110,16 @@ public class ClassUtils {
                         arrayList.get(arrayList.size() - 1)[1].setAccessible(true);
                         continue;
                     }
+                    throw new NoSuchMethodException();
+                } catch (NoSuchMethodException e) {
+
+                }
+                try {
                     Method isMethod = clazz.getMethod(method.getName().replaceFirst("set", "is"));
                     isMethod.setAccessible(true);
-                    if ((isMethod.getReturnType().equals(method.getTypeParameters()[0])) &&
-                            (isMethod.getReturnType().equals(Boolean.class)) &&
-                            (method.getParameterTypes()[0].equals(Boolean.class))) {
+                    if ((isMethod.getReturnType().equals(method.getParameterTypes()[0])) &&
+                            ((isMethod.getReturnType().equals(Boolean.class)) || (isMethod.getReturnType().equals(boolean.class)))  &&
+                            ((method.getParameterTypes()[0].equals(boolean.class)) || (method.getParameterTypes()[0].equals(Boolean.class)))) {
                         arrayList.add(new Method[]{method, isMethod});
                         arrayList.get(arrayList.size() - 1)[0].setAccessible(true);
                         arrayList.get(arrayList.size() - 1)[1].setAccessible(true);

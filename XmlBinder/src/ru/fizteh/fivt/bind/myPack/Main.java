@@ -17,6 +17,8 @@ public class Main {
         Permissions permissions = new Permissions();
         permissions.setQuota(100500);
         User user = new User(1, UserType.USER, new UserName("first", "last"), permissions);
-        byte[] bytes = binder.serialize(user);
+   //     User user1 = (User) binder.deserialize(binder.serialize(user));
+        Class clazz = double.class;
+    //    Method qwe = clazz.getDeclaredMethod("valueOf", String.class);
     }
 }
