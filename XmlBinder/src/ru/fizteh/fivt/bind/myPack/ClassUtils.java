@@ -139,7 +139,7 @@ public class ClassUtils {
         }
     }
 
-    public HashMap<String, Method[]> getMethodTable() {
+    public HashMap<String, Method[]> getMethodTable(Class clazz) {
         if (!this.methodMap.containsKey(clazz)) {
             return null;
         } else {

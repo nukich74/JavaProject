@@ -18,6 +18,5 @@ public class Main {
         permissions.setQuota(100500);
         User user = new User(1, UserType.USER, new UserName("first", "last"), permissions);
         byte[] bytes = binder.serialize(user);
-        System.out.println(bytes.toString());
     }
 }
