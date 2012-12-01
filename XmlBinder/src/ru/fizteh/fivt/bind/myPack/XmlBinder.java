@@ -84,14 +84,16 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
                                 streamWriter.writeEndElement();
                             } else
                             if (newValue.getClass().getAnnotation(AsXmlAttribute.class) != null) {
+                                streamWriter.writeStartElement(entry.getValue().getName());
                                 streamWriter.writeAttribute(entry.getKey(), newValue.toString());
+                                serialize(newValue, streamWriter, usedLinks);
                             } else {
                                 streamWriter.writeStartElement(entry.getKey());
                                 serialize(newValue, streamWriter, usedLinks);
                                 streamWriter.writeEndElement();
                             }
                         } else {
-                            streamWriter.writeStartElement();
+
                         }
                     }
                 } else {
