@@ -17,7 +17,7 @@ import java.util.*;
 public class ClassUtils {
     Class clazz;
     HashMap<Class, HashMap<String, Field>> fieldMap;
-    HashMap<Class, HashMap<String, Method>> methodMap;
+    HashMap<Class, HashMap<String, Method[]>> methodMap;
     HashMap<String, Constructor> constructorMap;
     HashSet<Class> readyClasses;
 
@@ -28,7 +28,7 @@ public class ClassUtils {
         readyClasses = new HashSet<Class>();
         constructorMap = new HashMap<String, Constructor>();
         fieldMap = new HashMap<Class, HashMap<String, Field>>();
-        methodMap = new HashMap<Class, HashMap<String, Method>>();
+        methodMap = new HashMap<Class, HashMap<String, Method[]>>();
 
         this.classPrepare(this.clazz);
     }
@@ -42,7 +42,6 @@ public class ClassUtils {
             return null;
         }
     }
-
 
     private void classPrepare(Class clzz) {
         constructorMap.put(clzz.getName(), this.getConstructor(clzz));
@@ -65,7 +64,15 @@ public class ClassUtils {
                     classPrepare(field.getType());
                 }
             } else {
-
+                ArrayList<Method[]> methods = getMethodArray(clzz);
+                HashMap<String, Method[]> tempMap = new HashMap<String, Method[]>();
+                for (Method[] pair: methods) {
+                    tempMap.put(pair[0].getName().replaceFirst("set", ""), pair);
+                }
+                methodMap.put(clzz, tempMap);
+                for (Method[] pair: methods) {
+                    classPrepare(pair[0].getReturnType());
+                }
             }
 
         } else {
@@ -117,6 +124,5 @@ public class ClassUtils {
 
         return arrayList;
     }
-
 
 }

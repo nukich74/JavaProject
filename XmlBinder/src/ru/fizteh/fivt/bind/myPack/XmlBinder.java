@@ -1,7 +1,5 @@
 package ru.fizteh.fivt.bind.myPack;
 
-import javafx.util.Pair;
-import ru.fizteh.fivt.bind.defPack.AsXmlAttribute;
 import ru.fizteh.fivt.bind.defPack.AsXmlCdata;
 import ru.fizteh.fivt.bind.defPack.BindingType;
 import ru.fizteh.fivt.bind.defPack.MembersToBind;
@@ -11,11 +9,8 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Package: ru.fizteh.fivt.bind.myPack
@@ -23,12 +18,11 @@ import java.util.TreeMap;
  */
 public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
     private Unsafe unsafe;
-    TreeMap<Class, HashMap<String, Field>> classFieldMap;
-    TreeMap<Class, Pair<String, Method>> classGetterSetterMap;
-
+    private ClassUtils classUtil;
 
     protected XmlBinder(Class clazz) {
         super(clazz);
+        classUtil = new ClassUtils(clazz);
         try {
             Field field = Unsafe.class.getDeclaredField("theUnsafe");
             field.setAccessible(true);
@@ -36,12 +30,6 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
         } catch (Exception e) {
             throw new RuntimeException("Can't create binder");
         }
-        //There are many requests, because we precalc all fields for any serializable class
-        createClassStructure(clazz);
-    }
-
-    private void createClassStructure(Class clazz) {
-
     }
 
     @Override
@@ -82,12 +70,11 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
                                 streamWriter.writeStartElement(entry.getKey());
                                 streamWriter.writeCData(newValue.toString());
                                 streamWriter.writeEndElement();
-                            } else
-                            if (newValue.getClass().getAnnotation(AsXmlAttribute.class) != null) {
+                            } /*TODO else if (newValue.getClass().getAnnotation(AsXmlAttribute.class) != null) {
                                 streamWriter.writeStartElement(entry.getValue().getName());
                                 streamWriter.writeAttribute(entry.getKey(), newValue.toString());
                                 serialize(newValue, streamWriter, usedLinks);
-                            } else {
+                            } */ else {
                                 streamWriter.writeStartElement(entry.getKey());
                                 serialize(newValue, streamWriter, usedLinks);
                                 streamWriter.writeEndElement();
@@ -110,13 +97,4 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
     public Object deserialize(byte[] bytes) throws XmlBinderException {
         return null;
     }
-
-    private byte[] methodSerialize(Object value) throws Exception {
-        return null;
-    }
-
-    private byte[] fullSerialize(Object value) {
-        return null;
-    }
-
 }
