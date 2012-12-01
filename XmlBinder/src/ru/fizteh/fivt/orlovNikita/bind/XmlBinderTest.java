@@ -2,6 +2,7 @@ package ru.fizteh.fivt.orlovNikita.bind;
 
 import org.junit.Test;
 import ru.fizteh.fivt.bind.test.*;
+import ru.fizteh.fivt.orlovNikita.bind.test.ClassBadSerialisation;
 
 public class XmlBinderTest {
 

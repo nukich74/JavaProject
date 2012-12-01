@@ -3,7 +3,6 @@ package ru.fizteh.fivt.orlovNikita.bind;
 import ru.fizteh.fivt.bind.BindingType;
 import ru.fizteh.fivt.bind.MembersToBind;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -23,16 +22,14 @@ public class ClassUtils {
     private HashMap<Class, HashMap<String, Field>> fieldMap;
     private HashMap<Class, HashMap<String, Method[]>> methodMap;
     private HashMap<String, Constructor> constructorMap;
-    private HashSet<Class> readyClasses;
+    private HashSet<Class> readyClasses = new HashSet<Class>();
 
     ClassUtils(Class clzz) {
         this.clazz = clzz;
-        readyClasses = new HashSet<Class>();
-        constructorMap = new HashMap<String, Constructor>();
-        fieldMap = new HashMap<Class, HashMap<String, Field>>();
-        methodMap = new HashMap<Class, HashMap<String, Method[]>>();
-
         this.classPrepare(this.clazz);
+        methodMap = new HashMap<Class, HashMap<String, Method[]>>();
+        fieldMap = new HashMap<Class, HashMap<String, Field>>();
+        constructorMap = new HashMap<String, Constructor>();
     }
 
     public Constructor getConstructor(Class clazz) {
@@ -112,7 +109,7 @@ public class ClassUtils {
                     }
                     throw new NoSuchMethodException();
                 } catch (NoSuchMethodException e) {
-
+                   //Do nothing, dance
                 }
                 try {
                     Method isMethod = clazz.getMethod(method.getName().replaceFirst("set", "is"));
@@ -150,9 +147,5 @@ public class ClassUtils {
         } else {
             return this.methodMap.get(clazz);
         }
-    }
-
-    boolean hasAnnotation(Object obj, Annotation annotation) {
-        return (obj.getClass().getAnnotation(annotation.getClass()) != null);
     }
 }
