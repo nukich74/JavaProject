@@ -1,7 +1,7 @@
 package ru.fizteh.fivt.bind.test;
 
-import ru.fizteh.fivt.bind.defPack.BindingType;
-import ru.fizteh.fivt.bind.defPack.MembersToBind;
+import ru.fizteh.fivt.bind.BindingType;
+import ru.fizteh.fivt.bind.MembersToBind;
 
 /**
  * @author Dmitriy Komanov (dkomanov@ya.ru)

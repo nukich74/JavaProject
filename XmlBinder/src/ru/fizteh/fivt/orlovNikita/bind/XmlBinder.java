@@ -1,12 +1,14 @@
-package ru.fizteh.fivt.bind.myPack;
+package ru.fizteh.fivt.orlovNikita.bind;
 
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import ru.fizteh.fivt.bind.defPack.AsXmlAttribute;
-import ru.fizteh.fivt.bind.defPack.AsXmlCdata;
-import ru.fizteh.fivt.bind.defPack.BindingType;
-import ru.fizteh.fivt.bind.defPack.MembersToBind;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import ru.fizteh.fivt.bind.AsXmlAttribute;
+import ru.fizteh.fivt.bind.AsXmlCdata;
+import ru.fizteh.fivt.bind.BindingType;
+import ru.fizteh.fivt.bind.MembersToBind;
 import sun.misc.Unsafe;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,8 +16,10 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
@@ -23,7 +27,7 @@ import java.util.Map;
  * Package: ru.fizteh.fivt.bind.myPack
  * User: acer
  */
-public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
+public class XmlBinder<T> extends ru.fizteh.fivt.bind.XmlBinder {
     private Unsafe unsafe;
     private ClassUtils classUtil;
 
@@ -75,7 +79,7 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
                 clazz.equals(Double.class) || clazz.isEnum() || clazz.equals(String.class);
     }
 
-    private void chooseNextSerializationFieldState(Map.Entry<String, Field> entry, Object newValue, XMLStreamWriter streamWriter, IdentityHashMap usedLinks) {
+    private void chooseNextSerializationFieldState(Map.Entry<String, Field> entry, Object newValue, XMLStreamWriter streamWriter, IdentityHashMap<Object, Integer> usedLinks) {
         try {
             if (isWrapperOrPrimitive(newValue.getClass())) {
                 if (entry.getValue().getAnnotation(AsXmlCdata.class) != null) {
@@ -99,7 +103,7 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
         }
     }
 
-    private void chooseNextSerializationMethodState(Map.Entry<String, Method[]> entry, Object newValue, XMLStreamWriter streamWriter, IdentityHashMap usedLinks) {
+    private void chooseNextSerializationMethodState(Map.Entry<String, Method[]> entry, Object newValue, XMLStreamWriter streamWriter, IdentityHashMap<Object, Integer> usedLinks) {
         try {
             if (isWrapperOrPrimitive(newValue.getClass())) {
                 if (entry.getValue()[1].getAnnotation(AsXmlCdata.class) != null) {
@@ -140,18 +144,16 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
                 if ((type == null) || (type.value().equals(MembersToBind.FIELDS))) {
                     for (Map.Entry<String, Field> entry : classUtil.getFieldsTable(value.getClass()).entrySet()) {
                         Object newValue = entry.getValue().get(value);
-                        if (newValue == null) {
-                            continue;
-                        } else
+                        if (newValue != null) {
                             chooseNextSerializationFieldState(entry, newValue, streamWriter, usedLinks);
+                        }
                     }
                 } else {
                     for (Map.Entry<String, Method[]> entry : classUtil.getMethodTable(value.getClass()).entrySet()) {
                         Object newValue = entry.getValue()[1].invoke(value);
-                        if (newValue == null) {
-                            continue;
-                        } else
+                        if (newValue != null) {
                             chooseNextSerializationMethodState(entry, newValue, streamWriter, usedLinks);
+                        }
                     }
                 }
             }
@@ -168,8 +170,10 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
         } else {
             try {
                 Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteInputStream(bytes, bytes.length));
-                if (!(document.getDocumentElement().getTagName().charAt(0) + document.getDocumentElement().getTagName().substring(1)).
-                        equals(this.getClass().getSimpleName())) {
+                String s = (String.valueOf(document.getDocumentElement().getTagName().charAt(0)).toUpperCase() + document.getDocumentElement().getTagName().substring(1));
+                String s2 = this.getClass().getSimpleName();
+                if (!(String.valueOf(document.getDocumentElement().getTagName().charAt(0)).toUpperCase() + document.getDocumentElement().getTagName().substring(1)).
+                        equals(this.getClazz().getSimpleName())) {
                     throw new RuntimeException("Can't deserialize this Xml, because of the not equal types");
                 } else {
                     return (T) deserialize(document.getDocumentElement(), this.getClazz());
@@ -182,19 +186,66 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
     }
 
     private Object deserialize(Element documentElement, Class clazz) {
-        try {
-            if (isWrapperOrPrimitive(clazz)) {
-                if (clazz.isPrimitive()) {
-                    return invokeForPrimitive(documentElement.getTextContent(), clazz);
-                } else
+        if (isWrapperOrPrimitive(clazz)) {
+            if (clazz.isPrimitive() || clazz.isEnum()) {
+                return invokeForPrimitive(documentElement.getTextContent(), clazz);
+            } else
+                if (clazz.equals(String.class)) {
+                    return documentElement.getTextContent();
+                }
+                try {
                     return clazz.getDeclaredMethod("valueOf").invoke(documentElement.getTextContent());
-            } else {
-
-            }
-        } catch (Exception e) {
-
+                }  catch (Exception e) {
+                    throw new RuntimeException("No method valueOf in wrapper of primitive");
+                }
         }
-        return null;
+        Object finalObj = null;
+        try {
+            finalObj = newInstance(clazz);
+            BindingType type = clazz.getClass().getAnnotation(BindingType.class);
+            NodeList nodeList = documentElement.getChildNodes();
+            if (nodeList == null) {
+                throw new RuntimeException("No such classes to deserialize");
+            } else if ((type == null) || (type.value().equals(MembersToBind.FIELDS))) {
+                HashMap<String, Field> fieldMap = classUtil.getFieldsTable(clazz);
+                if (fieldMap == null) {
+                    throw new RuntimeException("No structure for class");
+                }
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    Field field = fieldMap.get(((Element) nodeList.item(i)).getTagName());
+                    if ((field != null) && (nodeList.item(i).getNodeType() == (Node.ELEMENT_NODE))) {
+                        field.set(finalObj, deserialize((Element) nodeList.item(i), field.getType()));
+                    } else
+                    if (!field.getType().isPrimitive()) {
+                        field.set(finalObj, null);
+                    }
+                }
+            } else {
+                HashMap<String, Method[]> methodMap = classUtil.getMethodTable(clazz);
+                if (methodMap != null) {
+                    throw new RuntimeException("No structure for class");
+                }
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    Method[] array = methodMap.get(((Element) nodeList.item(i)).getTagName());
+                    if ((array != null) && (nodeList.item(i).getNodeType() == (Node.ELEMENT_NODE))) {
+                        array[0].invoke(finalObj, deserialize((Element) nodeList.item(i), array[1].getReturnType()));
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+            throw new RuntimeException("Error while deserializing class: " + clazz.getSimpleName());
+        } finally {
+            return finalObj;
+        }
+    }
+
+    private Object newInstance(Class clazz) throws Exception {
+        Constructor constructor = classUtil.getConstructor(clazz);
+        if (constructor == null) {
+            return unsafe.allocateInstance(clazz);
+        } else {
+            return constructor.newInstance();
+        }
     }
 
     private Object invokeForPrimitive(String textContent, Class clazz) {
@@ -217,8 +268,8 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.defPack.XmlBinder {
         } else if (clazz.equals(char.class)) {
             if (textContent.length() != 1) {
                 throw new RuntimeException("Bad Xml type!");
-            }
-            return Character.valueOf(textContent.charAt(0));
+            } else
+                return textContent.charAt(0);
         } else {
             return null;
         }

@@ -1,4 +1,4 @@
-package ru.fizteh.fivt.bind.defPack;
+package ru.fizteh.fivt.bind;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

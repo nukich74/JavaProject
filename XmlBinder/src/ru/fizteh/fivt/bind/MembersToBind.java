@@ -1,4 +1,4 @@
-package ru.fizteh.fivt.bind.defPack;
+package ru.fizteh.fivt.bind;
 
 /**
  * @author Dmitriy Komanov (dkomanov@ya.ru)

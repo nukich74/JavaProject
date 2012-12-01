@@ -1,7 +1,7 @@
-package ru.fizteh.fivt.bind.myPack;
+package ru.fizteh.fivt.orlovNikita.bind;
 
-import ru.fizteh.fivt.bind.defPack.BindingType;
-import ru.fizteh.fivt.bind.defPack.MembersToBind;
+import ru.fizteh.fivt.bind.BindingType;
+import ru.fizteh.fivt.bind.MembersToBind;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -35,7 +35,7 @@ public class ClassUtils {
         this.classPrepare(this.clazz);
     }
 
-    private Constructor getConstructor(Class clazz) {
+    public Constructor getConstructor(Class clazz) {
         try {
             Constructor constructor = clazz.getConstructor();
             constructor.setAccessible(true);
@@ -118,7 +118,7 @@ public class ClassUtils {
                     Method isMethod = clazz.getMethod(method.getName().replaceFirst("set", "is"));
                     isMethod.setAccessible(true);
                     if ((isMethod.getReturnType().equals(method.getParameterTypes()[0])) &&
-                            ((isMethod.getReturnType().equals(Boolean.class)) || (isMethod.getReturnType().equals(boolean.class)))  &&
+                            ((isMethod.getReturnType().equals(Boolean.class)) || (isMethod.getReturnType().equals(boolean.class))) &&
                             ((method.getParameterTypes()[0].equals(boolean.class)) || (method.getParameterTypes()[0].equals(Boolean.class)))) {
                         arrayList.add(new Method[]{method, isMethod});
                         arrayList.get(arrayList.size() - 1)[0].setAccessible(true);
@@ -155,5 +155,4 @@ public class ClassUtils {
     boolean hasAnnotation(Object obj, Annotation annotation) {
         return (obj.getClass().getAnnotation(annotation.getClass()) != null);
     }
-
 }
