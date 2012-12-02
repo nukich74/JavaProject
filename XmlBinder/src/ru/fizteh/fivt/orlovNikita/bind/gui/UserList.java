@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 /**
  * Package: ru.fizteh.fivt.orlovNikita.bind
@@ -17,11 +17,13 @@ import java.io.PrintWriter;
  * Time: 18:40
  */
 public class UserList extends JFrame {
-    XmlBinder<User> binder = new XmlBinder<User>(User.class);
-    File workFile = null;
+    public XmlBinder<User> binder;
+    public File workFile = null;
+    private ArrayList<User> allUsers;
 
     public UserList() {
         super("List user");
+        binder = new XmlBinder<User>(User.class);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setPreferredSize(new Dimension(350, 350));
         this.setLocationRelativeTo(null);
@@ -55,32 +57,53 @@ public class UserList extends JFrame {
                 if (workFile == null) {
                     JOptionPane.showMessageDialog(new JFrame(), "No opened file", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    PrintWriter writer = null;
-                    try {
-                        writer = new PrintWriter(workFile);
-                        //TODO получить данные с таблицы и сохранить их
-
-                    } catch (FileNotFoundException e1) {
-                        if (writer != null) {
-                             writer.close();
-                        }
-                    }
+                    writeNewTableToFile(workFile);
                 }
             }
         });
         fileMenu.add(new AbstractAction("Save as ...") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO add new dialog to save as new file, to get new
+                JFileChooser fileChooser = new JFileChooser();
+                if (fileChooser.showSaveDialog(UserList.this) == JFileChooser.APPROVE_OPTION) {
+                    writeNewTableToFile(fileChooser.getSelectedFile());
+                }
             }
         });
         menuBar.add(fileMenu);
         return menuBar;
     }
 
+    private void writeNewTableToFile(File file) {
+        if (file == null) {
+            return;
+        } else {
+            PrintWriter writer = null;
+            try {
+                writer = new PrintWriter(file);
+                writer.print("<users>".getBytes());
+                for (User user : getAllUsers()) {
+                    writer.print(binder.serialize(user));
+                }
+                writer.print("</users>".getBytes());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(new JFrame(), "Error while trying to save file", "Error", JOptionPane.ERROR_MESSAGE);
+            } finally {
+                if (writer != null) {
+                    writer.close();
+                }
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
         UserList list = new UserList();
         list.setVisible(true);
+    }
+
+    public ArrayList<User> getAllUsers() {
+        //TODO get all users from talble;
+        return allUsers;
     }
 }
