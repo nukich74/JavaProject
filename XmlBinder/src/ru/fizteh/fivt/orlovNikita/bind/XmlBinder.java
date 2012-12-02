@@ -66,6 +66,8 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.XmlBinder {
                     ///       streamWriter.close();
                 }
             }
+
+            String s = strWriter.toString();
             return strWriter.toString().getBytes();
         }
     }
@@ -138,6 +140,7 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.XmlBinder {
             }
             if (isWrapperOrPrimitive(value.getClass())) {
                 streamWriter.writeCharacters(value.toString());
+                usedLinks.remove(value);
             } else {
                 BindingType type = value.getClass().getAnnotation(BindingType.class);
                 if ((type == null) || (type.value().equals(MembersToBind.FIELDS))) {
@@ -145,6 +148,7 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.XmlBinder {
                         Object newValue = entry.getValue().get(value);
                         if (newValue != null) {
                             chooseNextSerializationFieldState(entry, newValue, streamWriter, usedLinks);
+                            usedLinks.remove(value);
                         }
                     }
                 } else {
@@ -152,6 +156,7 @@ public class XmlBinder<T> extends ru.fizteh.fivt.bind.XmlBinder {
                         Object newValue = entry.getValue()[1].invoke(value);
                         if (newValue != null) {
                             chooseNextSerializationMethodState(entry, newValue, streamWriter, usedLinks);
+                            usedLinks.remove(value);
                         }
                     }
                 }

@@ -10,8 +10,9 @@ public class XmlBinderTest {
     public void easyTest() {
         XmlBinder<User> binder = new XmlBinder<User>(User.class);
         Permissions permissions = new Permissions();
-        permissions.setQuota(100500);
-        User user = new User(1, UserType.USER, new UserName("first", "last"), permissions);
+        permissions.setQuota(100);
+        permissions.setRoot(false);
+        User user = new User(1, UserType.USER, new UserName("Ivan", "Ivanov"), permissions);
         User user1 = (User) binder.deserialize(binder.serialize(user));
         assert user != user1;
         assert user.equals(user1);

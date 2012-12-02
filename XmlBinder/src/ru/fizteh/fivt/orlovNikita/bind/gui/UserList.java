@@ -11,17 +11,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * Package: ru.fizteh.fivt.orlovNikita.bind
- * User: acer
- * Date: 02.12.12
- * Time: 18:40
- */
 public class UserList extends JFrame {
     public XmlBinder<User> binder;
     public File workFile = null;
     private ArrayList<User> allUsers;
     private JTable table;
+    private MyTable helpTable;
 
     public UserList() {
         super("List user");
@@ -31,13 +26,22 @@ public class UserList extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(true);
         this.setJMenuBar(createJMenuBar());
-        this.table = new JTable();
         this.pack();
-        createTable();
     }
 
-    private void createTable() {
+    private void createTable(File file) {
+        try {
 
+            helpTable = new MyTable(allUsers);
+            table = new JTable(helpTable);
+            this.getContentPane().add(table);
+            this.getContentPane().add(new JScrollPane(table));
+            this.validate();
+            helpTable.fireTableDataChanged();
+            this.repaint();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Error", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private JMenuBar createJMenuBar() {
@@ -46,20 +50,30 @@ public class UserList extends JFrame {
         fileMenu.add(new AbstractAction("Open") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int result = fileChooser.showOpenDialog(UserList.this);
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    workFile = fileChooser.getSelectedFile();
+                try {
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    int result = fileChooser.showOpenDialog(UserList.this);
+                    if (result == JFileChooser.APPROVE_OPTION) {
+                        workFile = fileChooser.getSelectedFile();
+                    }
+                    if (result == JFileChooser.ERROR) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Can't open or deserialize file", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    if (!workFile.exists() || workFile.isDirectory()) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Can't open or deserialize file", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        allUsers = getUserList(workFile);
+                        createTable(workFile);
+                    }
+                } catch (Exception ex) {
+
                 }
-                if (!workFile.exists() || !workFile.isDirectory()) {
-                    JOptionPane.showMessageDialog(new JFrame(), "Can't open or deserialize file", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    allUsers = getUserList(workFile);
-                    createTable();
-                }
+                UserList.this.repaint();
             }
-        });
+        }
+
+        );
         fileMenu.add(new AbstractAction("Save") {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,7 +83,9 @@ public class UserList extends JFrame {
                     writeNewTableToFile(workFile);
                 }
             }
-        });
+        }
+
+        );
         fileMenu.add(new AbstractAction("Save as ...") {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,7 +94,9 @@ public class UserList extends JFrame {
                     writeNewTableToFile(fileChooser.getSelectedFile());
                 }
             }
-        });
+        }
+
+        );
         menuBar.add(fileMenu);
         return menuBar;
     }
@@ -111,8 +129,7 @@ public class UserList extends JFrame {
     }
 
     public ArrayList<User> getAllUsersFromTable() {
-        //TODO get all users from talble;
-        return allUsers;
+        return helpTable.getData();
     }
 
     private ArrayList<User> getUserList(File file) {
@@ -120,10 +137,17 @@ public class UserList extends JFrame {
         ArrayList users = new ArrayList();
         try {
             scanner = new Scanner(file);
-            scanner.next("<users>");
-            while (scanner.hasNext()) {
-                String s = scanner.next("<user>.*</user>");
-                users.add(binder.deserialize(s.getBytes()));
+            StringBuilder builder = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                builder.append(scanner.nextLine());
+            }
+            String res = builder.toString().replace("<users>", "").replace("</users>", "");
+            String[] spl = res.split("(?=<user>)");
+            for (int i = 1; i < spl.length; i++) {
+                String temp = spl[i];
+                System.out.println(temp);
+                System.out.println(temp.length());
+                users.add(binder.deserialize(temp.getBytes()));
             }
         } catch (Exception e) {
             scanner.close();

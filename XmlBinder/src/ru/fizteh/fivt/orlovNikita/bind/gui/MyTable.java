@@ -1,69 +1,116 @@
 package ru.fizteh.fivt.orlovNikita.bind.gui;
 
+import ru.fizteh.fivt.bind.test.Permissions;
 import ru.fizteh.fivt.bind.test.User;
+import ru.fizteh.fivt.bind.test.UserName;
+import ru.fizteh.fivt.bind.test.UserType;
 
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-/**
- * Package: ru.fizteh.fivt.orlovNikita.bind.gui
- * User: acer
- * Date: 02.12.12
- * Time: 22:17
- */
-public class MyTable implements TableModel {
+public class MyTable extends AbstractTableModel {
 
-    private ArrayList<User> userList;
+    ArrayList<User> userList;
+
+    String columnNames[] = {"ID", "firstName", "lastName", "userType", "root", "quota"};
 
     MyTable(ArrayList<User> list) {
         userList = list;
     }
 
-
-
     @Override
     public int getRowCount() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return userList.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return columnNames.length;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return columnNames[columnIndex];
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        switch (columnIndex) {
+            case 0:
+                return int.class;
+            case 1:
+                return String.class;
+            case 2:
+                return String.class;
+            case 3:
+                return UserType.class;
+            case 4:
+                return int.class;
+            case 5:
+                return boolean.class;
+        }
+        return null;
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true;  //To change body of implemented methods use File | Settings | File Templates.
+        return true;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        switch (columnIndex) {
+            case 0:
+                return userList.get(rowIndex).getId();
+            case 1:
+                return userList.get(rowIndex).getName().getFirstName();
+            case 2:
+                return userList.get(rowIndex).getName().getLastName();
+            case 3:
+                return userList.get(rowIndex).getUserType();
+            case 4:
+                return userList.get(rowIndex).getPermissions().isRoot();
+            case 5:
+                return userList.get(rowIndex).getPermissions().getQuota();
+        }
+        return null;
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        User user = userList.get(rowIndex);
+        User newUser;
+        switch (columnIndex) {
+            case 0:
+                newUser = new User((Integer) aValue, user.getUserType(), user.getName(), user.getPermissions());
+                break;
+            case 1:
+                newUser = new User(user.getId(), user.getUserType(),
+                        new UserName((String) aValue, user.getName().getLastName()), user.getPermissions());
+                break;
+            case 2:
+                newUser = new User(user.getId(),
+                        user.getUserType(), new UserName(user.getName().getFirstName(), (String) aValue), user.getPermissions());
+                break;
+            case 3:
+                newUser = new User(user.getId(), (UserType) aValue, user.getName(), user.getPermissions());
+                break;
+            case 4:
+                Permissions permissions = new Permissions();
+                permissions.setRoot((Boolean) aValue);
+                newUser = new User(user.getId(), user.getUserType(), user.getName(), permissions);
+                break;
+            case 5:
+                permissions = new Permissions();
+                permissions.setQuota((Integer) aValue);
+                newUser = new User(user.getId(), user.getUserType(), user.getName(), permissions);
+                break;
+        }
+        userList.set(rowIndex, user);
     }
 
-    @Override
-    public void addTableModelListener(TableModelListener l) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public ArrayList<User> getData() {
+        return userList;
     }
 
-    @Override
-    public void removeTableModelListener(TableModelListener l) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
 }
