@@ -26,10 +26,10 @@ public class ClassUtils {
 
     ClassUtils(Class clzz) {
         this.clazz = clzz;
-        this.classPrepare(this.clazz);
         methodMap = new HashMap<Class, HashMap<String, Method[]>>();
         fieldMap = new HashMap<Class, HashMap<String, Field>>();
         constructorMap = new HashMap<String, Constructor>();
+        this.classPrepare(this.clazz);
     }
 
     public Constructor getConstructor(Class clazz) {

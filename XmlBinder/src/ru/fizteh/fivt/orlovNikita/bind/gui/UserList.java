@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Package: ru.fizteh.fivt.orlovNikita.bind
@@ -20,6 +21,7 @@ public class UserList extends JFrame {
     public XmlBinder<User> binder;
     public File workFile = null;
     private ArrayList<User> allUsers;
+    private JTable table;
 
     public UserList() {
         super("List user");
@@ -29,13 +31,14 @@ public class UserList extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(true);
         this.setJMenuBar(createJMenuBar());
+        this.table = new JTable();
         this.pack();
         createTable();
     }
 
     private void createTable() {
-    }
 
+    }
 
     private JMenuBar createJMenuBar() {
         JMenuBar menuBar = new JMenuBar();
@@ -48,6 +51,12 @@ public class UserList extends JFrame {
                 int result = fileChooser.showOpenDialog(UserList.this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     workFile = fileChooser.getSelectedFile();
+                }
+                if (!workFile.exists() || !workFile.isDirectory()) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Can't open or deserialize file", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    allUsers = getUserList(workFile);
+                    createTable();
                 }
             }
         });
@@ -81,11 +90,11 @@ public class UserList extends JFrame {
             PrintWriter writer = null;
             try {
                 writer = new PrintWriter(file);
-                writer.print("<users>".getBytes());
-                for (User user : getAllUsers()) {
-                    writer.print(binder.serialize(user));
+                writer.print("<users>");
+                for (User user : getAllUsersFromTable()) {
+                    writer.print(new String(binder.serialize(user)));
                 }
-                writer.print("</users>".getBytes());
+                writer.print("</users>");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(new JFrame(), "Error while trying to save file", "Error", JOptionPane.ERROR_MESSAGE);
             } finally {
@@ -96,14 +105,30 @@ public class UserList extends JFrame {
         }
     }
 
-
     public static void main(String[] args) {
         UserList list = new UserList();
         list.setVisible(true);
     }
 
-    public ArrayList<User> getAllUsers() {
+    public ArrayList<User> getAllUsersFromTable() {
         //TODO get all users from talble;
         return allUsers;
+    }
+
+    private ArrayList<User> getUserList(File file) {
+        Scanner scanner = null;
+        ArrayList users = new ArrayList();
+        try {
+            scanner = new Scanner(file);
+            scanner.next("<users>");
+            while (scanner.hasNext()) {
+                String s = scanner.next("<user>.*</user>");
+                users.add(binder.deserialize(s.getBytes()));
+            }
+        } catch (Exception e) {
+            scanner.close();
+            return null;
+        }
+        return users;
     }
 }
