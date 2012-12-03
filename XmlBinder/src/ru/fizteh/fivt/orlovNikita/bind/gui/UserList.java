@@ -6,6 +6,7 @@ import ru.fizteh.fivt.orlovNikita.bind.XmlBinder;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -34,8 +35,26 @@ public class UserList extends JFrame {
 
             helpTable = new MyTable(allUsers);
             table = new JTable(helpTable);
-            this.getContentPane().add(table);
+            table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            table.setColumnSelectionAllowed(false);
+            table.setAutoCreateRowSorter(true);
+            JButton button = new JButton("Delete row");
+            button.setSize(20, 20);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int viewRow = table.getSelectedRow();
+                    if (viewRow < 0) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Choose row to delete", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        helpTable.removeRow(viewRow);
+                    }
+                }
+            });
+            this.getContentPane().add(table, BorderLayout.PAGE_START);
             this.getContentPane().add(new JScrollPane(table));
+
+            this.getContentPane().add(button, BorderLayout.AFTER_LAST_LINE);
             this.validate();
             helpTable.fireTableDataChanged();
             this.repaint();
@@ -71,9 +90,7 @@ public class UserList extends JFrame {
                 }
                 UserList.this.repaint();
             }
-        }
-
-        );
+        });
         fileMenu.add(new AbstractAction("Save") {
             @Override
             public void actionPerformed(ActionEvent e) {
