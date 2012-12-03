@@ -54,7 +54,7 @@ public class MyTable extends AbstractTableModel {
             case 2:
                 return userList.get(rowIndex).getName().getLastName();
             case 3:
-                return userList.get(rowIndex).getUserType().toString().toString();
+                return userList.get(rowIndex).getUserType().toString();
             case 4:
                 return String.valueOf(userList.get(rowIndex).getPermissions().isRoot());
             case 5:
