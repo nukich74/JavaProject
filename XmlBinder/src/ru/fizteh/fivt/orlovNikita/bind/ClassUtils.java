@@ -75,8 +75,6 @@ public class ClassUtils {
                 }
             }
 
-        } else {
-            return;
         }
     }
 
