@@ -17,7 +17,7 @@ public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFac
                 clazz.equals(Byte.class) || clazz.equals(Character.class) ||
                 clazz.equals(Short.class) || clazz.equals(Integer.class) ||
                 clazz.equals(Long.class) || clazz.equals(Float.class) ||
-                clazz.equals(Double.class) || clazz.isEnum() || clazz.equals(String.class);
+                clazz.equals(Double.class) || clazz.isEnum();
     }
 
 
@@ -42,6 +42,7 @@ public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFac
                                 }
                                 builder = buildArrayStringValue(builder, array[i]);
                             }
+                            builder.append("}");
                         }
                         return builder;
                     }
@@ -60,7 +61,17 @@ public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFac
                                 if (isWrapperOrPrimitive(args[i].getClass())) {
                                     builder.append(args[i].toString());
                                 } else if (args[i].getClass().isArray()) {
-
+                                    builder = buildArrayStringValue(builder, args[i]);
+                                } else if (args[i].getClass().equals(String.class)) {
+                                    String value = (String)args[i];
+                                    builder.append("\"");
+                                    for (int j = 0; j < value.length(); j++) {
+                                        if (value.charAt(i) == '\\') {
+                                            builder.append('\\');
+                                        }
+                                        builder.append(value.charAt(i));
+                                    }
+                                    builder.append("\"");
                                 }
                             }
                             return ret;
