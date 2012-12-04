@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49524de7-c7ae-4e2c-b1bc-dfb27b87bb49" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactoryTest.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/proxy/Collect.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/proxy/DoNotProxy.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/proxy/InvocationHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Proxy/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Proxy/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java" afterPath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactoryTest.java" afterPath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactoryTest.java" />
     </list>
     <ignored path="Chat.iws" />
     <ignored path=".idea/workspace.xml" />

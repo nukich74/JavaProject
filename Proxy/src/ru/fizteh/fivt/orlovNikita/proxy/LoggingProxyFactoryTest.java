@@ -2,6 +2,8 @@ package ru.fizteh.fivt.orlovNikita.proxy;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 /**
  * Package: ru.fizteh.fivt.orlovNikita.proxy
  * User: acer
@@ -11,6 +13,9 @@ import org.junit.Test;
 public class LoggingProxyFactoryTest {
     @Test
     public void test1() {
+        StringBuilder builder = new StringBuilder();
+        Object invoker = new LoggingProxyFactory().createProxy(new HashMap <Integer[], String>().getClass(), builder);
+
     }
 
 }
