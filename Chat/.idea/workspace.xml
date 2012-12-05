@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49524de7-c7ae-4e2c-b1bc-dfb27b87bb49" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/proxy/InvocationHandler.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/proxy/InvocationHandler.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Proxy/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Proxy/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java" afterPath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java" />
@@ -76,7 +76,7 @@
       <file leaf-file-name="ChatException.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/Utils/ChatException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="190" selection-end="190" vertical-scroll-proportion="0.22537562">
+            <state line="9" column="0" selection-start="190" selection-end="190" vertical-scroll-proportion="0.23684211">
               <folding />
             </state>
           </provider>
@@ -115,9 +115,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="24" />
+    <option name="y" value="53" />
     <option name="width" value="1366" />
-    <option name="height" value="744" />
+    <option name="height" value="715" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -612,7 +612,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1366" height="744" extended-state="6" />
+    <frame x="0" y="53" width="1366" height="715" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -722,7 +722,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/Utils/ChatException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="190" selection-end="190" vertical-scroll-proportion="0.22537562">
+        <state line="9" column="0" selection-start="190" selection-end="190" vertical-scroll-proportion="0.23684211">
           <folding />
         </state>
       </provider>

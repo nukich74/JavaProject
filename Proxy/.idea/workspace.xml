@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3fae989b-42de-42ca-81e0-c5e6cbd342ad" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/proxy/InvocationHandler.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/proxy/InvocationHandler.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Chat/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Chat/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java" />
@@ -24,6 +24,21 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java" line="87" class="ru.fizteh.fivt.orlovNikita.proxy.LoggingProxyFactory.InvocationHandler" package="ru.fizteh.fivt.orlovNikita.proxy">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -67,32 +82,13 @@
       <file leaf-file-name="LoggingProxyFactory.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="61" selection-start="1980" selection-end="1980" vertical-scroll-proportion="0.4490818">
+            <state line="67" column="48" selection-start="2400" selection-end="2400" vertical-scroll-proportion="0.33248731">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#InvocationHandler#0;class#InvocationHandler#0;class#LoggingProxyFactory#0" expanded="false" />
-                <element signature="method#isWrapperOrPrimitive#0;class#InvocationHandler#0;class#LoggingProxyFactory#0" expanded="false" />
                 <element signature="method#buildArrayStringValue#0;class#InvocationHandler#0;class#LoggingProxyFactory#0" expanded="false" />
-                <element signature="method#invoke#0;class#InvocationHandler#0;class#LoggingProxyFactory#0" expanded="false" />
+                <element signature="method#getLog#0;class#LoggingProxyFactory#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InvocationHandler.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/proxy/InvocationHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoggingProxyFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/proxy/LoggingProxyFactory.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="3" selection-start="38" selection-end="38" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -100,9 +96,11 @@
       <file leaf-file-name="LoggingProxyFactoryTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactoryTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="116" selection-start="438" selection-end="438" vertical-scroll-proportion="0.0">
+            <state line="36" column="8" selection-start="1187" selection-end="1187" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#344#357#0" expanded="true" />
+                <element signature="e#946#954#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -127,9 +125,9 @@
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/proxy/ShrdingProxy.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/ShardingProxyFactory.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/InvocationHandler.java" />
-        <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactoryTest.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/proxy/InvokationHandler.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/proxy/InvocationHandler.java" />
+        <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactoryTest.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java" />
       </list>
     </option>
@@ -274,7 +272,13 @@
       </option>
       <envs />
       <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -439,7 +443,11 @@
       <created>1354636979995</created>
       <updated>1354636979995</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="all is bad, i don't understand how to create factory">
+      <created>1354638582188</created>
+      <updated>1354638582188</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -451,17 +459,17 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39903846" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.23557693" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962178" sideWeight="0.67147434" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32852563" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -505,7 +513,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dote, last task to write test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tested, done!" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -520,6 +528,9 @@
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="Wrote skeleton of logging proxy" />
     <MESSAGE value="Dote, last task to write test" />
+    <MESSAGE value="all is bad, i don't understand how to create factory" />
+    <MESSAGE value="Done bidlo kod" />
+    <MESSAGE value="Tested, done!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -529,18 +540,37 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactoryTest.java">
+    <entry file="jar:///usr/lib/jvm/java-7-oracle/src.zip!/java/util/Map.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="116" selection-start="438" selection-end="438" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="116" column="17" selection-start="5224" selection-end="5224" vertical-scroll-proportion="-2.372287">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/proxy/InvocationHandler.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/org/junit/runners/ParentRunner.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="153" selection-end="153" vertical-scroll-proportion="0.0">
+        <state line="43" column="25" selection-start="2461" selection-end="2461" vertical-scroll-proportion="0.35897437">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="40" selection-start="397" selection-end="397" vertical-scroll-proportion="0.46153846">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-7-oracle/src.zip!/java/util/TreeMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="530" column="0" selection-start="19785" selection-end="19785" vertical-scroll-proportion="0.33248731">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-7-oracle/src.zip!/java/util/TreeSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="254" column="0" selection-start="9666" selection-end="9666" vertical-scroll-proportion="0.33248731">
           <folding />
         </state>
       </provider>
@@ -552,15 +582,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/org/junit/runners/model/FrameworkMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#1777#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-7-oracle/src.zip!/java/util/HashSet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="200" column="0" selection-start="7358" selection-end="7358" vertical-scroll-proportion="0.33142856">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactoryTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="8" selection-start="1187" selection-end="1187" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#344#357#0" expanded="true" />
+            <element signature="e#946#954#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/proxy/LoggingProxyFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="61" selection-start="1980" selection-end="1980" vertical-scroll-proportion="0.4490818">
+        <state line="67" column="48" selection-start="2400" selection-end="2400" vertical-scroll-proportion="0.33248731">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#InvocationHandler#0;class#InvocationHandler#0;class#LoggingProxyFactory#0" expanded="false" />
-            <element signature="method#isWrapperOrPrimitive#0;class#InvocationHandler#0;class#LoggingProxyFactory#0" expanded="false" />
             <element signature="method#buildArrayStringValue#0;class#InvocationHandler#0;class#LoggingProxyFactory#0" expanded="false" />
-            <element signature="method#invoke#0;class#InvocationHandler#0;class#LoggingProxyFactory#0" expanded="false" />
+            <element signature="method#getLog#0;class#LoggingProxyFactory#0" expanded="false" />
           </folding>
         </state>
       </provider>
