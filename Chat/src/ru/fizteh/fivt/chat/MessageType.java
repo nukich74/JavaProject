@@ -1,4 +1,4 @@
-package ru.fizteh.fivt.orlovNikita.Utils;
+package ru.fizteh.fivt.chat;
 
 /**
  * Package: ru.fizteh.fivt.orlovNikita.Utils

@@ -1,4 +1,5 @@
-package ru.fizteh.fivt.orlovNikita.Utils;
+package ru.fizteh.fivt.chat;
+
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

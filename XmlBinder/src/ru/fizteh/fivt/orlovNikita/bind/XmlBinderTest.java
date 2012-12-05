@@ -1,10 +1,11 @@
 package ru.fizteh.fivt.orlovNikita.bind;
 
+import org.junit.Assert;
 import org.junit.Test;
 import ru.fizteh.fivt.bind.test.*;
 import ru.fizteh.fivt.orlovNikita.bind.test.ClassBadSerialisation;
 
-public class XmlBinderTest {
+public class XmlBinderTest extends Assert {
 
     @Test
     public void easyTest() {
@@ -14,8 +15,7 @@ public class XmlBinderTest {
         permissions.setRoot(false);
         User user = new User(1, UserType.USER, new UserName("Ivan", "Ivanov"), permissions);
         User user1 = (User) binder.deserialize(binder.serialize(user));
-        assert user != user1;
-        assert user.equals(user1);
+        assertEquals(user, user1);
     }
 
     @Test
@@ -25,7 +25,7 @@ public class XmlBinderTest {
         permissions.setQuota(10);
         User user = new User(1, UserType.USER, new UserName("first", "last"), permissions);
         User user1 = (User) binder.deserialize(binder.serialize(user));
-        assert user.equals(user1);
+        assertEquals(user, user1);
     }
 
     @Test(expected = RuntimeException.class)

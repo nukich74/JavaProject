@@ -1,4 +1,4 @@
-package ru.fizteh.fivt.orlovNikita.bind.gui;
+package ru.fizteh.fivt.orlovNikita.bind.gui.userlist;
 
 import ru.fizteh.fivt.bind.test.Permissions;
 import ru.fizteh.fivt.bind.test.User;
