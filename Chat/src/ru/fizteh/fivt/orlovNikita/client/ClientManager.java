@@ -23,7 +23,7 @@ public class ClientManager {
     }
 
 
-    private void imitateConsole() {
+    private void interpretConsole() {
         Scanner in = new Scanner(new BufferedInputStream(System.in));
         while (true) {
             String query = in.nextLine();
