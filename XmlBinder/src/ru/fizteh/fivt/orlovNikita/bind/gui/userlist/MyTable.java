@@ -35,11 +35,6 @@ public class MyTable extends AbstractTableModel {
     }
 
     @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        return String.class;
-    }
-
-    @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return true;
     }
@@ -56,7 +51,7 @@ public class MyTable extends AbstractTableModel {
             case 3:
                 return userList.get(rowIndex).getUserType().toString();
             case 4:
-                return String.valueOf(userList.get(rowIndex).getPermissions().isRoot());
+                return userList.get(rowIndex).getPermissions().isRoot();
             case 5:
                 return String.valueOf(userList.get(rowIndex).getPermissions().getQuota());
         }
@@ -85,9 +80,9 @@ public class MyTable extends AbstractTableModel {
                     break;
                 case 4:
                     Permissions permissions = user.getPermissions();
-                    if (((String) aValue).equals("false")) {
+                    if (aValue.equals(false)) {
                         permissions.setRoot(false);
-                    } else if (aValue.equals("true")) {
+                    } else if (aValue.equals(true)) {
                         permissions.setRoot(true);
                     } else {
                         throw new RuntimeException("Bad type!!!");
@@ -118,8 +113,34 @@ public class MyTable extends AbstractTableModel {
     }
 
     public void addRow(int row) {
-        userList.add(row, new User(0, UserType.USER, new UserName("null", "null"), new Permissions()));
+        if (userList == null) {
+            userList = new ArrayList<User>();
+        }
+        if (row < 0) {
+            userList.add(new User(0, UserType.USER, new UserName("null", "null"), new Permissions()));
+        } else {
+            userList.add(row, new User(0, UserType.USER, new UserName("null", "null"), new Permissions()));
+        }
         fireTableDataChanged();
     }
 
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return String.class;
+            case 1:
+                return String.class;
+            case 2:
+                return String.class;
+            case 3:
+                return String.class;
+            case 4:
+                return Boolean.class;
+            case 5:
+                return String.class;
+            default:
+                return String.class;
+        }
+    }
 }

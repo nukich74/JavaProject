@@ -26,6 +26,7 @@ public class UserList extends JFrame {
         this.setPreferredSize(new Dimension(350, 350));
         this.setLocationRelativeTo(null);
         this.setResizable(true);
+        this.setLayout(new BorderLayout());
         this.setJMenuBar(createJMenuBar());
         this.pack();
     }
@@ -39,7 +40,7 @@ public class UserList extends JFrame {
             table.setColumnSelectionAllowed(false);
             table.setAutoCreateRowSorter(true);
             JButton button = new JButton("Delete row");
-            button.setSize(20, 20);
+            button.setSize(10, 10);
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -53,13 +54,13 @@ public class UserList extends JFrame {
             });
 
             JButton buttonInsert = new JButton("Add row");
-            button.setSize(20, 20);
-            button.addActionListener(new ActionListener() {
+            button.setSize(10, 10);
+            buttonInsert.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int viewRow = table.getSelectedRow();
                     if (viewRow < 0) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Choose row after to insert", "Error",JOptionPane.ERROR_MESSAGE);
+                        helpTable.addRow(0);
                     } else {
                         helpTable.addRow(viewRow);
                     }
@@ -69,7 +70,8 @@ public class UserList extends JFrame {
             this.getContentPane().add(table, BorderLayout.PAGE_START);
             this.getContentPane().add(new JScrollPane(table));
 
-            this.getContentPane().add(button, BorderLayout.AFTER_LAST_LINE);
+            this.getContentPane().add(button, BorderLayout.LINE_END);
+            this.getContentPane().add(buttonInsert, BorderLayout.LINE_START);
             this.validate();
             helpTable.fireTableDataChanged();
             this.repaint();
