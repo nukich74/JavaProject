@@ -61,25 +61,33 @@ public class ServerManager {
             ByteBuffer buffer = ByteBuffer.allocate(256);
             if (getMessageFromSocket(sc, buffer)) {
                 if (buffer.array()[0] == 1) {
-                    String uName = MessageProcessor.getClientName(buffer.array());
-                    if (this.userTable.containsKey(uName)) {
-                        sendMessage(sc, MessageUtils.error("Another person has this name, please try another one."));
-                        sendMessage(sc, MessageUtils.bye());
-                        try {
-                            if (sc != null) {
-                                sc.close();
-                            }
-                        } catch (Exception e) {
-                            throw new RuntimeException("Can't close socket");
-                        }
-                    } else {
-                        System.out.println("We have new user: " + uName);
-                        sendMessageToAll(uName + "connected to server", serverName);
-                    }
+                    processHelloMessage(sc, buffer);
+                } else if (buffer.array()[1] == 2) {
+
                 }
             }
         }
     }
+
+    private void processHelloMessage(SocketChannel sc, ByteBuffer buffer) throws Exception {
+        String uName = MessageProcessor.getClientName(buffer.array());
+        if (this.userTable.containsKey(uName)) {
+            sendMessage(sc, MessageUtils.error("Another person has this name, please try another one."));
+            sendMessage(sc, MessageUtils.bye());
+            try {
+                if (sc != null) {
+                    sc.close();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Can't close socket");
+            }
+        } else {
+            System.out.println("We have new user: " + uName);
+            sendMessageToAll(uName + "connected to server", serverName);
+            sendMessage(sc, MessageUtils.message("Welcome to room with port: " + address.getHostName() + address.getHostAddress(), serverName));
+        }
+    }
+
 
     private void sendMessageToAll(String s, String from) {
         Iterator iter = userTable.entrySet().iterator();

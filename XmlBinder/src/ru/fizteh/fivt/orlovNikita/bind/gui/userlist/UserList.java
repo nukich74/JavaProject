@@ -51,6 +51,21 @@ public class UserList extends JFrame {
                     }
                 }
             });
+
+            JButton buttonInsert = new JButton("Add row");
+            button.setSize(20, 20);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int viewRow = table.getSelectedRow();
+                    if (viewRow < 0) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Choose row after to insert", "Error",JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        helpTable.addRow(viewRow);
+                    }
+                }
+            });
+
             this.getContentPane().add(table, BorderLayout.PAGE_START);
             this.getContentPane().add(new JScrollPane(table));
 

@@ -116,4 +116,10 @@ public class MyTable extends AbstractTableModel {
         userList.remove(row);
         fireTableRowsDeleted(row, row);
     }
+
+    public void addRow(int row) {
+        userList.add(row, new User(0, UserType.USER, new UserName("null", "null"), new Permissions()));
+        fireTableDataChanged();
+    }
+
 }
