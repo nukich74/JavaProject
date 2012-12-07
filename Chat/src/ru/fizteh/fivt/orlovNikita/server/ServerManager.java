@@ -26,26 +26,44 @@ public class ServerManager {
     }
 
     private void interpretConsole() {
-        String query = in.nextLine();
-        if (query.matches("listen [0-9]{4}]")) {
-        } else if (query.equals("/stop")) {
-
-        } else if (query.equals("/list")) {
-
-        } else if (query.equals("/send")) {
-
-        } else if (query.equals("/sendAll")) {
-
-        } else if (query.equals("/kill")) {
-
-        } else if (query.equals("/exit")) {
-
-        } else {
+        try {
+            String query = in.nextLine();
+            if (query.matches("listen [0-9]{4}]")) {
+            } else if (query.equals("/stop")) {
+                this.serverStop();
+            } else if (query.equals("/list")) {
+                this.serverList();
+            } else if (query.matches("/send")) {
+                String[] array = query.split(" ");
+                if (userTable.containsKey(array[1])) {
+                    StringBuilder builder = new StringBuilder();
+                    for (String s : array) {
+                        builder.append(s);
+                    }
+                    sendMessage(userTable.get(array[1]), MessageUtils.message(serverName, builder.toString()));
+                } else {
+                    System.out.println("No such user in table!");
+                }
+            } else if (query.equals("/sendAll")) {
+                String s = "";
+                for (String tmp : query.split(" ")) {
+                    s += tmp;
+                }
+                this.sendMessageToAll(s, serverName);
+            } else if (query.matches("/kill")) {
+                serverKillUser(query.split(" ")[1]);
+            } else if (query.equals("/exit")) {
+                serverStop();
+                System.exit(0);
+            } else {
+                throw new RuntimeException();
+            }
+        } catch (Exception e) {
             System.out.println("Bad command to server, try again");
         }
     }
 
-    void workOutClient(SelectionKey key) throws Exception {
+    private void workOutClient(SelectionKey key) throws Exception {
         if (key.isAcceptable()) {
             SocketChannel channel = socketChannel.accept();
             if (channel == null) {
@@ -61,10 +79,14 @@ public class ServerManager {
             if (getMessageFromSocket(sc, buffer)) {
                 if (buffer.array()[0] == 1) {
                     processHelloMessage(sc, buffer);
-                } else if (buffer.array()[1] == 2) {
+                } else if (buffer.array()[0] == 2) {
                     processToRoomMessage(buffer);
-                } else if (buffer.array()[1] == 3) {
-
+                } else if (buffer.array()[0] == 3) {
+                    this.clientStop(sc);
+                } else if (buffer.array()[0] == 127) {
+                    this.processErrorMessage(sc, buffer);
+                } else {
+                    this.badCaseOfMessage(sc);
                 }
             }
         }
@@ -112,6 +134,29 @@ public class ServerManager {
         SocketChannel channel = userTable.get(name);
         this.sendMessage(channel, MessageUtils.message(serverName, "You have been disconnected by server!"));
         this.sendMessage(channel, MessageUtils.bye());
+    }
+
+    private void badCaseOfMessage(SocketChannel sc) throws Exception {
+        if (!incomingSockets.contains(sc)) {
+            sendMessage(sc, MessageUtils.message(serverName, "Not in this time baby! Your request is bad..."));
+            clientStop(sc);
+        } else {
+            clientStop(sc);
+        }
+    }
+
+
+    private void processErrorMessage(SocketChannel sc, ByteBuffer buffer) {
+        for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
+            if (pair.getValue().equals(sc)) {
+                ArrayList<String> list = MessageProcessor.parseBytesToMessages(buffer.array());
+                System.out.println("Error message from client: " + pair.getKey());
+                for (String s : list) {
+                    System.out.println(s);
+                }
+                break;
+            }
+        }
     }
 
     private void processToRoomMessage(ByteBuffer buffer) throws Exception {
@@ -180,7 +225,7 @@ public class ServerManager {
     }
 
     private void clientStop(SocketChannel socket) throws Exception {
-        for (Map.Entry<String, SocketChannel> pair: userTable.entrySet()) {
+        for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
             if (pair.getValue().equals(socket)) {
                 sendMessage(socket, MessageUtils.bye());
                 socket.close();
