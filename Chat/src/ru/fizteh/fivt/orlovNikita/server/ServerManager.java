@@ -4,7 +4,7 @@ import ru.fizteh.fivt.chat.MessageUtils;
 import ru.fizteh.fivt.orlovNikita.MessageProcessor;
 
 import java.io.BufferedInputStream;
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -17,14 +17,13 @@ public class ServerManager {
     private ServerSocketChannel socketChannel;
     private Scanner in;
     private static final String serverName = "<server>";
-    private InetAddress address = null;
+    private InetSocketAddress address = null;
     private HashSet<SocketChannel> incomingSockets;
     private HashMap<String, SocketChannel> userTable;
 
     public ServerManager() {
         in = new Scanner(new BufferedInputStream(System.in));
     }
-
 
     private void interpretConsole() {
         String query = in.nextLine();
@@ -50,7 +49,7 @@ public class ServerManager {
         if (key.isAcceptable()) {
             SocketChannel channel = socketChannel.accept();
             if (channel == null) {
-                throw new RuntimeException("Error while accepting");
+                throw new RuntimeException("Error while accepting. Shutting down the server!");
             } else {
                 channel.configureBlocking(false);
                 channel.register(selector, SelectionKey.OP_READ);
@@ -63,10 +62,46 @@ public class ServerManager {
                 if (buffer.array()[0] == 1) {
                     processHelloMessage(sc, buffer);
                 } else if (buffer.array()[1] == 2) {
-
+                    processToRoomMessage();
                 }
             }
         }
+    }
+
+    private void serverListen(Integer port) {
+        try {
+            if (address == null) {
+                socketChannel = ServerSocketChannel.open();
+                socketChannel.configureBlocking(false);
+                address = new InetSocketAddress(port);
+                socketChannel.socket().bind(address);
+                socketChannel.register(selector, SelectionKey.OP_ACCEPT);
+            } else {
+                throw new RuntimeException("Port is already opened");
+            }
+        } catch (Exception e) {
+            System.out.println("Can't stat listening " + e.getMessage());
+            System.out.println("Try another port, or wait");
+        }
+    }
+
+    private void serverStop() {
+        try {
+            for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
+                this.sendMessageToAll("Room is closed! Goodbye!", serverName);
+                this.sendMessage(pair.getValue(), MessageUtils.bye());
+                pair.getValue().close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error stopping server!" + e.getMessage());
+            System.out.println("Terminating server work!");
+            System.exit(1);
+        }
+    }
+
+
+    private void processToRoomMessage() {
+
     }
 
     private void processHelloMessage(SocketChannel sc, ByteBuffer buffer) throws Exception {
@@ -84,16 +119,16 @@ public class ServerManager {
         } else {
             System.out.println("We have new user: " + uName);
             sendMessageToAll(uName + "connected to server", serverName);
-            sendMessage(sc, MessageUtils.message("Welcome to room with port: " + address.getHostName() + address.getHostAddress(), serverName));
+            sendMessage(sc, MessageUtils.message("Welcome to room with port: " + address.getHostName() + address.getAddress(), serverName));
         }
     }
 
 
-    private void sendMessageToAll(String s, String from) {
+    private void sendMessageToAll(String message, String from) {
         Iterator iter = userTable.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry<String, SocketChannel> pair = (Map.Entry<String, SocketChannel>) iter.next();
-            sendMessage(pair.getValue(), MessageUtils.message(from, s));
+            sendMessage(pair.getValue(), MessageUtils.message(from, message));
         }
     }
 
