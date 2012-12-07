@@ -62,7 +62,9 @@ public class ServerManager {
                 if (buffer.array()[0] == 1) {
                     processHelloMessage(sc, buffer);
                 } else if (buffer.array()[1] == 2) {
-                    processToRoomMessage();
+                    processToRoomMessage(buffer);
+                } else if (buffer.array()[1] == 3) {
+
                 }
             }
         }
@@ -112,12 +114,18 @@ public class ServerManager {
         this.sendMessage(channel, MessageUtils.bye());
     }
 
-    private void processToRoomMessage() {
-
+    private void processToRoomMessage(ByteBuffer buffer) throws Exception {
+        ArrayList<String> messages = MessageProcessor.parseBytesToMessages(buffer.array());
+        String uName = messages.get(0);
+        for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
+            if (!pair.getKey().equals(uName)) {
+                this.sendMessage(pair.getValue(), buffer.array());
+            }
+        }
     }
 
     private void processHelloMessage(SocketChannel sc, ByteBuffer buffer) throws Exception {
-        String uName = MessageProcessor.getClientName(buffer.array());
+        String uName = MessageProcessor.getClientNameFromHelloMessage(buffer.array());
         if (this.userTable.containsKey(uName)) {
             sendMessage(sc, MessageUtils.error("Another person has this name, please try another one."));
             sendMessage(sc, MessageUtils.bye());
@@ -132,13 +140,12 @@ public class ServerManager {
             System.out.println("We have new user: " + uName);
             sendMessageToAll(uName + "connected to server", serverName);
             sendMessage(sc, MessageUtils.message("Welcome to room with port: " + address.getHostName() + address.getAddress(), serverName));
+            incomingSockets.remove(sc);
         }
     }
 
     private void sendMessageToAll(String message, String from) {
-        Iterator iter = userTable.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry<String, SocketChannel> pair = (Map.Entry<String, SocketChannel>) iter.next();
+        for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
             sendMessage(pair.getValue(), MessageUtils.message(from, message));
         }
     }
@@ -160,12 +167,31 @@ public class ServerManager {
                 throw new RuntimeException("Bad input channel or stream");
             } else {
                 int readBytes = socket.read(stream);
+                if (readBytes == -1) {
+                    clientStop(socket);
+                    throw new RuntimeException("User is offline");
+                }
                 return true;
             }
 
         } catch (Exception e) {
             return false;
         }
+    }
+
+    private void clientStop(SocketChannel socket) throws Exception {
+        for (Map.Entry<String, SocketChannel> pair: userTable.entrySet()) {
+            if (pair.getValue().equals(socket)) {
+                sendMessage(socket, MessageUtils.bye());
+                socket.close();
+                userTable.remove(pair.getKey());
+                sendMessageToAll(pair.getKey() + " is offline!", serverName);
+                return;
+            } else {
+                continue;
+            }
+        }
+        throw new RuntimeException("No such client in user table!");
     }
 
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public final class MessageProcessor {
 
-    public static String getClientName(byte[] bytes) throws Exception {
+    public static String getClientNameFromHelloMessage(byte[] bytes) throws Exception {
         try {
             ArrayList<String> array = new ArrayList<String>();
             ByteBuffer buffer = ByteBuffer.wrap(bytes);
@@ -23,12 +23,25 @@ public final class MessageProcessor {
                 array.add(new String(mes));
             }
             if (array.size() != 1) {
-                throw new RuntimeException("Error white getting client name");
+                throw new RuntimeException("Incorrect hello message");
             } else {
                 return array.get(0);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error while getting client name");
+            throw new RuntimeException("Error white getting client name: " + e.getMessage());
         }
     }
+
+    public static ArrayList<String> parseBytesToMessages(byte[] input) {
+            ArrayList<String> res = new ArrayList<String>();
+            ByteBuffer buffer = ByteBuffer.wrap(input);
+            buffer.get();
+            for(int i = 0; i < buffer.get(); ++i) {
+                byte[] newMessage = new byte[buffer.getInt()];
+                buffer.get(newMessage);
+                res.add(new String(newMessage));
+            }
+            return res;
+    }
+
 }
