@@ -76,7 +76,11 @@ public class MyTable extends AbstractTableModel {
                             user.getUserType(), new UserName(user.getName().getFirstName(), (String) aValue), user.getPermissions());
                     break;
                 case 3:
-                    newUser = new User(user.getId(), UserType.valueOf((String) aValue), user.getName(), user.getPermissions());
+                    if (aValue.equals(UserType.MODERATOR) || aValue.equals(UserType.ADVANCED) || aValue.equals(UserType.USER)) {
+                        newUser = new User(user.getId(), (UserType) aValue, user.getName(), user.getPermissions());
+                    } else {
+                        throw new RuntimeException("Bad type!!!");
+                    }
                     break;
                 case 4:
                     Permissions permissions = user.getPermissions();
@@ -134,7 +138,7 @@ public class MyTable extends AbstractTableModel {
             case 2:
                 return String.class;
             case 3:
-                return String.class;
+                return Enum.class;
             case 4:
                 return Boolean.class;
             case 5:

@@ -1,9 +1,11 @@
 package ru.fizteh.fivt.orlovNikita.bind.gui.userlist;
 
 import ru.fizteh.fivt.bind.test.User;
+import ru.fizteh.fivt.bind.test.UserType;
 import ru.fizteh.fivt.orlovNikita.bind.XmlBinder;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,6 +68,13 @@ public class UserList extends JFrame {
                     }
                 }
             });
+
+            TableColumn userTypeColumnEditor = table.getColumnModel().getColumn(3);
+            JComboBox comboBox = new JComboBox();
+            comboBox.addItem(UserType.USER);
+            comboBox.addItem(UserType.MODERATOR);
+            comboBox.addItem(UserType.ADVANCED);
+            userTypeColumnEditor.setCellEditor(new DefaultCellEditor(comboBox));
 
             this.getContentPane().add(table, BorderLayout.PAGE_START);
             this.getContentPane().add(new JScrollPane(table));
