@@ -99,6 +99,18 @@ public class ServerManager {
         }
     }
 
+    private void serverList() {
+        System.out.println("User list:");
+        for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
+            System.out.println(pair.getKey());
+        }
+    }
+
+    private void serverKillUser(String name) {
+        SocketChannel channel = userTable.get(name);
+        this.sendMessage(channel, MessageUtils.message(serverName, "You have been disconnected by server!"));
+        this.sendMessage(channel, MessageUtils.bye());
+    }
 
     private void processToRoomMessage() {
 
@@ -123,7 +135,6 @@ public class ServerManager {
         }
     }
 
-
     private void sendMessageToAll(String message, String from) {
         Iterator iter = userTable.entrySet().iterator();
         while (iter.hasNext()) {
@@ -142,7 +153,6 @@ public class ServerManager {
 
         }
     }
-
 
     private boolean getMessageFromSocket(SocketChannel socket, ByteBuffer stream) {
         try {
