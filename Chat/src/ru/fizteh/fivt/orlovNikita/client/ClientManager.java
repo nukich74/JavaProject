@@ -1,5 +1,6 @@
 package ru.fizteh.fivt.orlovNikita.client;
 
+import ru.fizteh.fivt.chat.MessageUtils;
 import ru.fizteh.fivt.orlovNikita.MessageProcessor;
 
 import java.io.BufferedInputStream;
@@ -9,7 +10,10 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class ClientManager {
     private String clientName;
@@ -38,12 +42,12 @@ public class ClientManager {
 
     private void workOutServer() {
         try {
-            for (SelectionKey key : ((Selector)this.serverTable.get(curServer)[1]).selectedKeys()) {
+            for (SelectionKey key : ((Selector) this.serverTable.get(curServer)[1]).selectedKeys()) {
                 if (key.isReadable()) {
                     SocketChannel sc = (SocketChannel) key.channel();
                     ByteBuffer mes = ByteBuffer.allocate(512);
                     if (sc.read(mes) == -1) {
-                        disconnect(curServer);
+                        disconnect(curServer, MessageUtils.bye());
                     }
                     if (mes.array()[0] == 2) {
                         ArrayList<String> l = MessageProcessor.parseBytesToMessages(mes.array());
@@ -53,7 +57,7 @@ public class ClientManager {
                         }
                         System.out.println(builder.toString());
                     } else if (mes.array()[0] == 3) {
-                        disconnect(curServer);
+                        disconnect(curServer, MessageUtils.bye());
                     } else if (mes.array()[0] == 127) {
                         ArrayList<String> l = MessageProcessor.parseBytesToMessages(mes.array());
                         StringBuilder builder = new StringBuilder();
@@ -72,6 +76,19 @@ public class ClientManager {
     }
 
     private void disconnect(InetSocketAddress key) {
+        try {
+            if (key.equals(curServer)) {
+                curServer = null;
+            }
+            ((SocketChannel) serverTable.get(key)[0]).write(ByteBuffer.wrap(MessageUtils.bye()));
+            ((SocketChannel) serverTable.get(key)[0]).close();
+            ((Selector) serverTable.get(key)[1]).close();
+            serverTable.remove(key);
+
+        } catch (Exception e) {
+            System.out.println("Error disconnecting user!");
+            System.exit(1);
+        }
     }
 
     private void interpretConsole() {
@@ -83,7 +100,7 @@ public class ClientManager {
             if (this.curServer == null) {
                 System.out.println("You are not connected!");
             } else {
-                this.disconnect(curServer);
+                this.disconnect(curServer, MessageUtils.bye());
             }
         } else if (query.equals("whereami")) {
             if (this.curServer != null) {
@@ -93,27 +110,25 @@ public class ClientManager {
             }
         } else if (query.equals("list")) {
             System.out.println("Connected to:");
-            for (Map.Entry<InetSocketAddress, Object[]> pair: serverTable.entrySet()) {
+            for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
                 System.out.println(pair.getKey().getHostString() + ":" + pair.getKey().getPort());
             }
         } else if (query.equals("use")) {
 
         } else if (query.equals("exit")) {
-            for (Map.Entry<InetSocketAddress, Object[]> pair: serverTable.entrySet()) {
-                disconnect(pair.getKey());
+            for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
+                disconnect(pair.getKey(), MessageUtils.bye());
             }
         }
         System.out.print('/');
 
     }
 
-    public static void connect(String query) {
+    public static void connectToServer(String host, String port) {
         try {
-            String host = query.split(":")[0];
-            String port = query.split(":")[1];
             InetSocketAddress newAddress = new InetSocketAddress(host, Integer.valueOf(port));
-
-            if () {
+            //TODO
+            if (true) {
                 System.out.println("You are already have connection to this server");
             } else {
 

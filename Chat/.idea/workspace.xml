@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49524de7-c7ae-4e2c-b1bc-dfb27b87bb49" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java" />
     </list>
     <ignored path="Chat.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,50 +71,20 @@
       <file leaf-file-name="ClientManager.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.7245409">
+            <state line="77" column="51" selection-start="3066" selection-end="3066" vertical-scroll-proportion="0.24707846">
               <folding>
                 <element signature="method#workOutServer#0;class#ClientManager#0" expanded="false" />
+                <element signature="method#disconnect#0;class#ClientManager#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="newClient.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java">
+      <file leaf-file-name="MessageUtils.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/chat/MessageUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="0" selection-start="4398" selection-end="4398" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#360#377#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="178" column="36" selection-start="6891" selection-end="6891" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#ServerManager#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#interpretConsole#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#workOutClient#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#serverListen#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#serverStop#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#serverList#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#serverKillUser#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#badCaseOfMessage#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#processErrorMessage#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#processToRoomMessage#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#processHelloMessage#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#sendMessageToAll#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#sendMessage#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#getMessageFromSocket#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#clientStop#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#run#0;class#ServerManager#0" expanded="false" />
-                <element signature="method#main#0;class#ServerManager#0" expanded="false" />
-              </folding>
+            <state line="19" column="25" selection-start="430" selection-end="430" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -165,8 +136,8 @@
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/chat/User.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/chat/MessageProcessor.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/MessageProcessor.java" />
-        <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java" />
+        <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" />
       </list>
     </option>
@@ -733,7 +704,11 @@
       <created>1354965018215</created>
       <updated>1354965018215</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="moremoremore">
+      <created>1354968841139</created>
+      <updated>1354968841139</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -800,7 +775,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="added bad client" />
+    <option name="LAST_COMMIT_MESSAGE" value="moremoremore" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -820,6 +795,7 @@
     <MESSAGE value="at least a need to write console handler" />
     <MESSAGE value="Done, but untested" />
     <MESSAGE value="added bad client" />
+    <MESSAGE value="moremoremore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -846,13 +822,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/chat/MessageUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="25" selection-start="430" selection-end="430" vertical-scroll-proportion="0.33248731">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/MessageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -862,9 +831,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/chat/MessageUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="25" selection-start="430" selection-end="430" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="178" column="36" selection-start="6891" selection-end="6891" vertical-scroll-proportion="0.0">
+        <state line="178" column="91" selection-start="6946" selection-end="6946" vertical-scroll-proportion="0.49916527">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#ServerManager#0;class#ServerManager#0" expanded="false" />
@@ -888,21 +864,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="0" selection-start="4398" selection-end="4398" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#360#377#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.7245409">
+        <state line="77" column="51" selection-start="3066" selection-end="3066" vertical-scroll-proportion="0.24707846">
           <folding>
             <element signature="method#workOutServer#0;class#ClientManager#0" expanded="false" />
+            <element signature="method#disconnect#0;class#ClientManager#0" expanded="false" />
           </folding>
         </state>
       </provider>

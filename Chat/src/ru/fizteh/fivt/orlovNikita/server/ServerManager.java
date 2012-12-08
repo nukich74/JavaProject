@@ -190,8 +190,8 @@ public class ServerManager {
             }
         } else {
             System.out.println("We have new user: " + uName);
-            sendMessageToAll(uName + "connected to server", serverName);
-            sendMessage(sc, MessageUtils.message("Welcome to room with port: " + address.getHostName() + address.getAddress(), serverName));
+            sendMessageToAll(uName + " connected to server", serverName);
+            sendMessage(sc, MessageUtils.message("Welcome to room: " + address.getHostName() + address.getAddress(), serverName));
             incomingSockets.remove(sc);
         }
     }
@@ -243,7 +243,10 @@ public class ServerManager {
                 continue;
             }
         }
-        throw new RuntimeException("No such client in user table!");
+        if (incomingSockets.contains(socket)) {
+            incomingSockets.remove(socket);
+        } else
+            throw new RuntimeException("No such client in user table!");
     }
 
     private void run() {
