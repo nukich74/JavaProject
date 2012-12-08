@@ -4,7 +4,6 @@ import ru.fizteh.fivt.chat.MessageUtils;
 import ru.fizteh.fivt.orlovNikita.MessageProcessor;
 
 import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -47,7 +46,7 @@ public class ClientManager {
                     SocketChannel sc = (SocketChannel) key.channel();
                     ByteBuffer mes = ByteBuffer.allocate(512);
                     if (sc.read(mes) == -1) {
-                        disconnect(curServer, MessageUtils.bye());
+                        disconnect(curServer);
                     }
                     if (mes.array()[0] == 2) {
                         ArrayList<String> l = MessageProcessor.parseBytesToMessages(mes.array());
@@ -57,7 +56,7 @@ public class ClientManager {
                         }
                         System.out.println(builder.toString());
                     } else if (mes.array()[0] == 3) {
-                        disconnect(curServer, MessageUtils.bye());
+                        disconnect(curServer);
                     } else if (mes.array()[0] == 127) {
                         ArrayList<String> l = MessageProcessor.parseBytesToMessages(mes.array());
                         StringBuilder builder = new StringBuilder();
@@ -100,7 +99,7 @@ public class ClientManager {
             if (this.curServer == null) {
                 System.out.println("You are not connected!");
             } else {
-                this.disconnect(curServer, MessageUtils.bye());
+                this.disconnect(curServer);
             }
         } else if (query.equals("whereami")) {
             if (this.curServer != null) {
@@ -117,26 +116,44 @@ public class ClientManager {
 
         } else if (query.equals("exit")) {
             for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
-                disconnect(pair.getKey(), MessageUtils.bye());
+                disconnect(pair.getKey());
             }
         }
         System.out.print('/');
 
     }
 
-    public static void connectToServer(String host, String port) {
+    public void connectToServer(String host, String port) {
         try {
             InetSocketAddress newAddress = new InetSocketAddress(host, Integer.valueOf(port));
-            //TODO
-            if (true) {
-                System.out.println("You are already have connection to this server");
+            if (this.serverTable.containsKey(newAddress)) {
+                System.out.println("User is already connected to this server!");
             } else {
-
+                serverTable.put(newAddress, new Object[]{SocketChannel.open(), Selector.open()});
+                ((SocketChannel) serverTable.get(newAddress)[0]).connect(newAddress);
+                ((SocketChannel) serverTable.get(newAddress)[0]).configureBlocking(false);
+                ((SocketChannel) serverTable.get(newAddress)[0]).
+                        register((Selector) serverTable.get(newAddress)[1], SelectionKey.OP_READ);
+                curServer = newAddress;
+                sendMessage(((SocketChannel) serverTable.get(newAddress)[1]), MessageUtils.hello(this.clientName));
             }
         } catch (Exception e) {
-
+            System.out.println("Error of connecting to server!");
+            System.exit(1);
         }
 
+    }
+
+    public void sendMessage(SocketChannel socketChannel, byte[] message) {
+        try {
+            if (socketChannel != null) {
+                socketChannel.write(ByteBuffer.wrap(message));
+            } else {
+                System.err.println("socket is down!");
+            }
+        } catch (Exception e) {
+            System.out.println("Error of sending message! : " + e.getMessage());
+        }
     }
 
 
@@ -146,6 +163,7 @@ public class ClientManager {
                 throw new RuntimeException("When launch give your name as 1st param!");
             } else {
                 ClientManager manager = new ClientManager(args[0]);
+                manager.launchClient();
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
