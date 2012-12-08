@@ -3,7 +3,8 @@ package ru.fizteh.fivt.orlovNikita.client;
 import ru.fizteh.fivt.chat.MessageUtils;
 import ru.fizteh.fivt.orlovNikita.MessageProcessor;
 
-import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -12,27 +13,29 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class ClientManager {
     private String clientName;
     private HashMap<InetSocketAddress, Object[]> serverTable; // obj[0] = socket [1] = selector;
     private InetSocketAddress curServer = null;
-    private Scanner in;
+    private BufferedReader in;
 
     public ClientManager(String tClientName) {
         clientName = tClientName;
-        in = new Scanner(System.in);
+        in = new BufferedReader(new InputStreamReader(System.in));
         serverTable = new HashMap<InetSocketAddress, Object[]>();
     }
 
     public void launchClient() {
         try {
+
             for (; ; ) {
-                if (in.hasNextLine()) {
+                if (in.ready()) {
                     this.interpretConsole();
                 }
-                this.workOutServer();
+                if (curServer != null && !(((Selector) serverTable.get(curServer)[1]).selectNow() == 0)) {
+                    this.workOutServer();
+                }
             }
         } catch (Exception e) {
             System.out.println("Something goes wrong with the client! : " + e.getMessage());
@@ -64,8 +67,6 @@ public class ClientManager {
                             builder.append(l.get(i));
                         }
                         System.out.println("Error: " + builder.toString());
-                    } else {
-                        throw new RuntimeException("Unknown message!");
                     }
                 }
             }
@@ -91,36 +92,51 @@ public class ClientManager {
     }
 
     private void interpretConsole() {
-        Scanner in = new Scanner(new BufferedInputStream(System.in));
-        String query = in.nextLine();
-        if (query.matches("/connect [0-9a-z]*\\:[0-9]{4}]")) {
-            connectToServer(query.split(" ")[1].split(":")[0], query.split(" ")[1].split(":")[1]);
-        } else if (query.equals("disconnect")) {
-            if (this.curServer == null) {
-                System.out.println("You are not connected!");
-            } else {
-                this.disconnect(curServer);
+        try {
+            String query = in.readLine();
+            if (query.matches("/connect [0-9a-zA-Z]*:[0-9]*")) {
+                connectToServer(query.split(" ")[1].split(":")[0], query.split(" ")[1].split(":")[1]);
+            } else if (query.equals("disconnect")) {
+                if (this.curServer == null) {
+                    System.out.println("You are not connected!");
+                } else {
+                    this.disconnect(curServer);
+                }
+            } else if (query.equals("whereami")) {
+                if (this.curServer != null) {
+                    System.out.println(curServer.getHostString() + ":" + curServer.getPort());
+                } else {
+                    System.out.println("You are not in any room!");
+                }
+            } else if (query.equals("list")) {
+                System.out.println("Connected to:");
+                for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
+                    System.out.println(pair.getKey().getHostString() + ":" + pair.getKey().getPort());
+                }
+            } else if (query.equals("use")) {
+                String[] array = query.split(" :");
+                InetSocketAddress goTo = new InetSocketAddress(array[1], Integer.valueOf(array[2]));
+                if (serverTable.containsKey(goTo)) {
+                    curServer = goTo;
+                } else {
+                    System.out.println("Can't go, because not connected!");
+                }
+            } else if (query.equals("exit")) {
+                for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
+                    disconnect(pair.getKey());
+                }
+            } else if (query.equals("disconnect")) {
+                if (curServer != null) {
+                    disconnect(curServer);
+                }
             }
-        } else if (query.equals("whereami")) {
-            if (this.curServer != null) {
-                System.out.println(curServer.getHostString() + ":" + curServer.getPort());
-            } else {
-                System.out.println("You are not in any room!");
+            if (curServer != null) {
+                sendMessage((SocketChannel) serverTable.get(curServer)[0], MessageUtils.message(this.clientName, query));
             }
-        } else if (query.equals("list")) {
-            System.out.println("Connected to:");
-            for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
-                System.out.println(pair.getKey().getHostString() + ":" + pair.getKey().getPort());
-            }
-        } else if (query.equals("use")) {
 
-        } else if (query.equals("exit")) {
-            for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
-                disconnect(pair.getKey());
-            }
+        } catch (Exception e) {
+            System.out.println("Error while executing command, try again!");
         }
-        System.out.print('/');
-
     }
 
     public void connectToServer(String host, String port) {
@@ -135,7 +151,7 @@ public class ClientManager {
                 ((SocketChannel) serverTable.get(newAddress)[0]).
                         register((Selector) serverTable.get(newAddress)[1], SelectionKey.OP_READ);
                 curServer = newAddress;
-                sendMessage(((SocketChannel) serverTable.get(newAddress)[1]), MessageUtils.hello(this.clientName));
+                sendMessage(((SocketChannel) serverTable.get(newAddress)[0]), MessageUtils.hello(this.clientName));
             }
         } catch (Exception e) {
             System.out.println("Error of connecting to server!");

@@ -3,32 +3,36 @@ package ru.fizteh.fivt.orlovNikita.server;
 import ru.fizteh.fivt.chat.MessageUtils;
 import ru.fizteh.fivt.orlovNikita.MessageProcessor;
 
-import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public class ServerManager {
     private Selector selector;
     private ServerSocketChannel socketChannel;
-    private Scanner in;
+    private BufferedReader in;
     private static final String serverName = "<server>";
     private InetSocketAddress address = null;
-    private HashSet<SocketChannel> incomingSockets;
+    private HashSet<SocketChannel> incomingSockets = new HashSet<SocketChannel>();
     private HashMap<String, SocketChannel> userTable;
 
     public ServerManager() {
-        in = new Scanner(new BufferedInputStream(System.in));
+        in = new BufferedReader(new InputStreamReader(System.in));
     }
 
     private void interpretConsole() {
         try {
-            String query = in.nextLine();
-            if (query.matches("listen [0-9]{4}]")) {
+            String query = in.readLine();
+            if (query.matches("/listen [0-9]*")) {
                 this.serverListen(Integer.valueOf(query.split(" ")[1]));
             } else if (query.equals("/stop")) {
                 this.serverStop();
@@ -65,7 +69,8 @@ public class ServerManager {
         }
     }
 
-    private void workOutClient(SelectionKey key) throws Exception {
+    void workOutClient(SelectionKey key) throws Exception {
+        System.out.println("Working out key!");
         if (key.isAcceptable()) {
             SocketChannel channel = socketChannel.accept();
             if (channel == null) {
@@ -80,6 +85,7 @@ public class ServerManager {
             ByteBuffer buffer = ByteBuffer.allocate(256);
             if (getMessageFromSocket(sc, buffer)) {
                 if (buffer.array()[0] == 1) {
+                    System.out.println("We have new in registered user!");
                     processHelloMessage(sc, buffer);
                 } else if (buffer.array()[0] == 2) {
                     processToRoomMessage(buffer);
@@ -169,6 +175,7 @@ public class ServerManager {
     private void processToRoomMessage(ByteBuffer buffer) throws Exception {
         ArrayList<String> messages = MessageProcessor.parseBytesToMessages(buffer.array());
         String uName = messages.get(0);
+        System.out.println(uName + " sent new message to room ...");
         for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
             if (!pair.getKey().equals(uName)) {
                 this.sendMessage(pair.getValue(), buffer.array());
@@ -179,6 +186,7 @@ public class ServerManager {
     private void processHelloMessage(SocketChannel sc, ByteBuffer buffer) throws Exception {
         String uName = MessageProcessor.getClientNameFromHelloMessage(buffer.array());
         if (this.userTable.containsKey(uName)) {
+            System.out.println("Someone tries to connect via used name!" + " " + uName);
             sendMessage(sc, MessageUtils.error("Another person has this name, please try another one."));
             sendMessage(sc, MessageUtils.bye());
             try {
@@ -253,16 +261,19 @@ public class ServerManager {
         try {
             selector = Selector.open();
             for (; ; ) {
-                int available = selector.selectNow();
-                if (in.hasNextLine()) {
+
+                if (in.ready()) {
                     interpretConsole();
+                }
+                if (selector.selectNow() == 0) {
+                    continue;
                 }
                 for (SelectionKey key : selector.selectedKeys()) {
                     workOutClient(key);
                 }
             }
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
         }
     }
 
