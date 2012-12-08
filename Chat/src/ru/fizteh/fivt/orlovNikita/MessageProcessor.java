@@ -16,8 +16,9 @@ public final class MessageProcessor {
             ArrayList<String> array = new ArrayList<String>();
             ByteBuffer buffer = ByteBuffer.wrap(bytes);
             buffer.get(); // еще кол-во вроде
-            for (int i = 0; i < buffer.get(); i++) {
-                int messageLen = buffer.get();
+            int len = buffer.get();
+            for (int i = 0; i < len; i++) {
+                int messageLen = buffer.getInt();
                 byte[] mes = new byte[messageLen];
                 buffer.get(mes);
                 array.add(new String(mes));
@@ -28,7 +29,7 @@ public final class MessageProcessor {
                 return array.get(0);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error white getting client name: " + e.getMessage());
+            throw new RuntimeException("Error while getting client name: " + e.getMessage());
         }
     }
 

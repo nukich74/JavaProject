@@ -28,7 +28,6 @@ public class ClientManager {
 
     public void launchClient() {
         try {
-
             for (; ; ) {
                 if (in.ready()) {
                     this.interpretConsole();
@@ -83,11 +82,12 @@ public class ClientManager {
             ((SocketChannel) serverTable.get(key)[0]).write(ByteBuffer.wrap(MessageUtils.bye()));
             ((SocketChannel) serverTable.get(key)[0]).close();
             ((Selector) serverTable.get(key)[1]).close();
-            serverTable.remove(key);
-
+            System.out.println("Disconnected successfully!");
         } catch (Exception e) {
             System.out.println("Error disconnecting user!");
             System.exit(1);
+        } finally {
+            serverTable.remove(key);
         }
     }
 
@@ -125,6 +125,7 @@ public class ClientManager {
                 for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
                     disconnect(pair.getKey());
                 }
+                System.exit(0);
             } else if (query.equals("disconnect")) {
                 if (curServer != null) {
                     disconnect(curServer);

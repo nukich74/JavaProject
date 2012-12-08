@@ -11,10 +11,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class ServerManager {
     private Selector selector;
@@ -26,6 +23,7 @@ public class ServerManager {
     private HashMap<String, SocketChannel> userTable;
 
     public ServerManager() {
+        userTable = new HashMap<String, SocketChannel>();
         in = new BufferedReader(new InputStreamReader(System.in));
     }
 
@@ -50,11 +48,12 @@ public class ServerManager {
                     System.out.println("No such user in table!");
                 }
             } else if (query.equals("/sendAll")) {
-                String s = "";
-                for (String tmp : query.split(" ")) {
-                    s += tmp;
+                String[] array = query.split(" ");
+                StringBuilder builder = new StringBuilder();
+                for (int i = 1; i < array.length; i++) {
+                    builder.append(array[i]);
                 }
-                this.sendMessageToAll(s, serverName);
+                this.sendMessageToAll(MessageUtils.message(serverName, builder.toString()));
             } else if (query.matches("/kill")) {
                 serverKillUser(query.split(" ")[1]);
             } else if (query.equals("/exit")) {
@@ -71,7 +70,7 @@ public class ServerManager {
 
     void workOutClient(SelectionKey key) throws Exception {
         System.out.println("Working out key!");
-        if (key.isAcceptable()) {
+        if ((key.readyOps() & SelectionKey.OP_ACCEPT) == SelectionKey.OP_ACCEPT) {
             SocketChannel channel = socketChannel.accept();
             if (channel == null) {
                 throw new RuntimeException("Error while accepting. Shutting down the server!");
@@ -80,12 +79,12 @@ public class ServerManager {
                 channel.register(selector, SelectionKey.OP_READ);
                 incomingSockets.add(channel);
             }
-        } else if (key.isReadable()) {
+        } else if ((key.readyOps() & SelectionKey.OP_READ) == SelectionKey.OP_READ) {
             SocketChannel sc = (SocketChannel) key.channel();
-            ByteBuffer buffer = ByteBuffer.allocate(256);
+            ByteBuffer buffer = ByteBuffer.allocate(512);
             if (getMessageFromSocket(sc, buffer)) {
                 if (buffer.array()[0] == 1) {
-                    System.out.println("We have new in registered user!");
+                    System.out.println("We have new registered user!");
                     processHelloMessage(sc, buffer);
                 } else if (buffer.array()[0] == 2) {
                     processToRoomMessage(buffer);
@@ -123,7 +122,7 @@ public class ServerManager {
         }
         try {
             for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
-                this.sendMessageToAll("Room is closed! Goodbye!", serverName);
+                this.sendMessageToAll(MessageUtils.message(serverName, "Room is closed! Goodbye!"));
                 this.sendMessage(pair.getValue(), MessageUtils.bye());
                 pair.getValue().close();
             }
@@ -181,6 +180,7 @@ public class ServerManager {
                 this.sendMessage(pair.getValue(), buffer.array());
             }
         }
+        this.sendMessageToAll(buffer.array());
     }
 
     private void processHelloMessage(SocketChannel sc, ByteBuffer buffer) throws Exception {
@@ -198,15 +198,16 @@ public class ServerManager {
             }
         } else {
             System.out.println("We have new user: " + uName);
-            sendMessageToAll(uName + " connected to server", serverName);
-            sendMessage(sc, MessageUtils.message("Welcome to room: " + address.getHostName() + address.getAddress(), serverName));
+            sendMessageToAll(MessageUtils.message(serverName, uName + " connected to server"));
+            sendMessage(sc, MessageUtils.message("Welcome to room: " + address.getPort(), serverName));
+            userTable.put(uName, sc);
             incomingSockets.remove(sc);
         }
     }
 
-    private void sendMessageToAll(String message, String from) {
+    private void sendMessageToAll(byte[] message) {
         for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
-            sendMessage(pair.getValue(), MessageUtils.message(from, message));
+            sendMessage(pair.getValue(), message);
         }
     }
 
@@ -217,7 +218,11 @@ public class ServerManager {
                 socket.write(bf);
             }
         } catch (Exception e) {
-
+            try {
+                clientStop(socket);
+            } catch (Exception e1) {
+                System.out.println("Server error! Stopping server:" + e1.getMessage());
+            }
         }
     }
 
@@ -245,7 +250,7 @@ public class ServerManager {
                 sendMessage(socket, MessageUtils.bye());
                 socket.close();
                 userTable.remove(pair.getKey());
-                sendMessageToAll(pair.getKey() + " is offline!", serverName);
+                sendMessageToAll(MessageUtils.message(serverName, pair.getKey() + " is offline!"));
                 return;
             } else {
                 continue;
@@ -268,9 +273,11 @@ public class ServerManager {
                 if (selector.selectNow() == 0) {
                     continue;
                 }
-                for (SelectionKey key : selector.selectedKeys()) {
+                Set<SelectionKey> keys =  selector.selectedKeys();
+                for (SelectionKey key : keys) {
                     workOutClient(key);
                 }
+                keys.clear();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
