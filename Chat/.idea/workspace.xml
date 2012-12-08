@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49524de7-c7ae-4e2c-b1bc-dfb27b87bb49" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/acer.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/acer.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java" />
     </list>
     <ignored path="Chat.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,8 +70,10 @@
       <file leaf-file-name="ClientManager.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="39" selection-start="936" selection-end="936" vertical-scroll-proportion="0.49916527">
-              <folding />
+            <state line="38" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.7245409">
+              <folding>
+                <element signature="method#workOutServer#0;class#ClientManager#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -81,7 +81,7 @@
       <file leaf-file-name="newClient.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="263" column="48" selection-start="11235" selection-end="11235" vertical-scroll-proportion="0.0">
+            <state line="117" column="0" selection-start="4398" selection-end="4398" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#360#377#0" expanded="true" />
@@ -729,7 +729,11 @@
       <created>1354924074691</created>
       <updated>1354924074691</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added bad client">
+      <created>1354965018215</created>
+      <updated>1354965018215</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -796,7 +800,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Done, but untested" />
+    <option name="LAST_COMMIT_MESSAGE" value="added bad client" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -815,6 +819,7 @@
     <MESSAGE value="more changes" />
     <MESSAGE value="at least a need to write console handler" />
     <MESSAGE value="Done, but untested" />
+    <MESSAGE value="added bad client" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -857,16 +862,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="263" column="48" selection-start="11235" selection-end="11235" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#360#377#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="178" column="36" selection-start="6891" selection-end="6891" vertical-scroll-proportion="0.0">
@@ -893,10 +888,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="117" column="0" selection-start="4398" selection-end="4398" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#360#377#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="39" selection-start="936" selection-end="936" vertical-scroll-proportion="0.49916527">
-          <folding />
+        <state line="38" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.7245409">
+          <folding>
+            <element signature="method#workOutServer#0;class#ClientManager#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

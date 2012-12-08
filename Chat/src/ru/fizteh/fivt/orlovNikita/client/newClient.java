@@ -115,18 +115,7 @@ public class newClient {
         }
     }
 
-    public static void disconnect(Map<String, Integer> servers,
-                                  WrapperPrimitive<String> curServer, WrapperPrimitive<Integer> curServerNumber,
-                                  WrapperPrimitive<Boolean> connected, List<SocketChannel> channels,
-                                  List<Selector> selectors) {
-        sendMessage(channels.get(curServerNumber.t), MessageUtils.bye());
-        closeChannel(channels.get(curServerNumber.t));
-        closeSelector(selectors.get(curServerNumber.t));
-        servers.remove(curServer.t);
-        connected.t = false;
-        curServerNumber.t = -1;
-        System.out.println("You are disconnected from " + curServer.t);
-    }
+
 
     public void interpretConsole() {
         try {
