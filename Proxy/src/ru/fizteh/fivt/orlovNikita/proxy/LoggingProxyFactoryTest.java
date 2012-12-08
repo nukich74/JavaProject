@@ -25,6 +25,7 @@ public class LoggingProxyFactoryTest {
         proxy.get(0);
         proxy.get(123);
         System.out.println(invoker.getLog());
+        System.out.println();
     }
 
     @Test
@@ -33,10 +34,22 @@ public class LoggingProxyFactoryTest {
         StringBuilder builder = new StringBuilder();
         LoggingProxyFactory factory = new LoggingProxyFactory();
         List proxy = (List) factory.createProxy(map, builder, List.class);
-        proxy.add("asd\n");
+        proxy.add("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasd\n");
         proxy.add("\fasdasd\t\n\\");
         proxy.indexOf("asd\n");
         proxy.clear();
+        System.out.println(factory.getLog());
+        System.out.println();
+    }
+
+    @Test
+    public void test3() {
+        ArrayList<String[]> map = new ArrayList<String[]>();
+        StringBuilder builder = new StringBuilder();
+        LoggingProxyFactory factory = new LoggingProxyFactory();
+        List proxy = (List) factory.createProxy(map, builder, List.class);
+        proxy.add(new String[]{"asd, asd", "173"});
+        proxy.add(new String[]{"asd", "asd"});
         System.out.println(factory.getLog());
     }
 

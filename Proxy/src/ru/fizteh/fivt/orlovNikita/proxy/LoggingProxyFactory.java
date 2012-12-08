@@ -1,10 +1,11 @@
 package ru.fizteh.fivt.orlovNikita.proxy;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 
 /**
  * Package: ru.fizteh.fivt.orlovNikita.proxy
@@ -15,18 +16,21 @@ import java.util.HashSet;
 public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFactory {
 
     private StringBuilder builder;
-    private HashSet<Method> methods;
+    private HashMap<Method, Class> methods;
 
     LoggingProxyFactory() {
-        methods = new HashSet<Method>();       ///!!!
+        methods = new HashMap<Method, Class>();       ///!!!
         builder = new StringBuilder();
     }
 
 
     public class InvocationHandler implements java.lang.reflect.InvocationHandler {
         private Object invokeObject;
+        private HashMap<Method, Class> methods;
+        String extendedChar = "";
 
-        InvocationHandler(Object target) {
+        InvocationHandler(Object target, HashMap<Method, Class> in) {
+            methods = in;
             invokeObject = target;
         }
 
@@ -38,9 +42,51 @@ public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFac
                     clazz.equals(Double.class) || clazz.isEnum();
         }
 
+        StringBuilder buildStringValue(StringBuilder tempBuilder, String o) {
+            String value = (String) o;
+            tempBuilder.append("\"");
+            for (int j = 0; j < value.length(); j++) {
+                switch (value.charAt(j)) {
+                    case '\t':
+                        tempBuilder.append("\\t");
+                        break;
+                    case '\r':
+                        tempBuilder.append("\\r");
+                        break;
+                    case '\n':
+                        tempBuilder.append("\\n");
+                        break;
+                    case '\f':
+                        tempBuilder.append("\\f");
+                        break;
+                    case '\'':
+                        tempBuilder.append("\\'");
+                    case '\"':
+                        tempBuilder.append("\\\"");
+                    case '\\':
+                        tempBuilder.append("\\");
+                    default:
+                        tempBuilder.append(value.charAt(j));
+                        break;
+                }
+            }
+            tempBuilder.append("\"");
+            return tempBuilder;
+        }
+
         public StringBuilder buildArrayStringValue(StringBuilder builder, Object array) {
             if (isWrapperOrPrimitive(array.getClass())) {
-                builder.append(array);
+                builder.append(array).append(extendedChar);
+            } else if (array.getClass().equals(String.class)) {
+                StringBuilder tbuilder = new StringBuilder();
+                tbuilder = buildStringValue(tbuilder, (String)array);
+                if (tbuilder.length() > 60) {
+                    extendedChar = "\n  ";
+                    builder.append("[a very long result of toString() method of " + array.getClass().getSimpleName() + " with huge amount of data]").
+                            append(extendedChar);
+                } else {
+                    builder.append(tbuilder).append(extendedChar);
+                }
             } else if (array.getClass().isArray()) {
                 builder.append(((Object[]) array).length);
                 builder.append("{");
@@ -49,11 +95,11 @@ public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFac
                         builder.append(", ");
                     }
                     Object tarray = ((Object[]) array)[i];
-                    builder = buildArrayStringValue(builder, tarray);
+                    builder = buildArrayStringValue(builder, tarray).append(extendedChar);
                 }
                 builder.append("}");
             } else {
-                builder.append(array.toString());
+                builder.append(array.toString()).append(extendedChar);
             }
             return builder;
         }
@@ -63,29 +109,30 @@ public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFac
                 builder.append("null");
             }
             if (isWrapperOrPrimitive(o.getClass())) {
-                builder.append(o.toString());
-            } else if (o.getClass().isArray()) {
-                builder = buildArrayStringValue(builder, o);
-            } else if (o.getClass().equals(String.class)) {
-                String value = (String) o;
-                builder.append("\"");
-                for (int j = 0; j < value.length(); j++) {
-                        switch (value.charAt(j)) {
-                            case '\t':
-                                builder.append("\\t");
-                                break;
-                            case '\r':
-                                builder.append("\\r");
-                                break;
-                            case '\n':
-                                builder.append("\\n");
-                                break;
-                            default:
-                                builder.append(value.charAt(j));
-                                break;
-                        }
+                if (o.toString().length() > 60) {
+                    extendedChar = "\n  ";
+                    builder.append("[a very long result of toString() method of " + o.getClass().getSimpleName() + " with huge amount of data]").append(extendedChar);
+                } else {
+                    builder.append(o.toString()).append(extendedChar);
                 }
-                builder.append("\"");
+            } else if (o.getClass().isArray()) {
+                StringBuilder tbuilder = new StringBuilder();
+                tbuilder = buildArrayStringValue(tbuilder, o);
+                if (tbuilder.length() > 60) {
+                    extendedChar = "\n  ";
+                    builder.append("[a very long result of toString() method of " + o.getClass().getSimpleName() + " with huge amount of data]").append(extendedChar);
+                } else {
+                    builder.append(tbuilder).append(extendedChar);
+                }
+            } else if (o.getClass().equals(String.class)) {
+                StringBuilder tempBuilder = new StringBuilder();
+                tempBuilder = buildStringValue(tempBuilder, (String) o);
+                if (tempBuilder.length() > 60) {
+                    extendedChar = "\n  ";
+                    builder.append("[a very long result of toString() method of " + o.getClass().getSimpleName() + " with huge amount of data]").append(extendedChar);
+                } else {
+                    builder.append(tempBuilder.toString()).append(extendedChar);
+                }
             }
 
         }
@@ -93,19 +140,18 @@ public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFac
         @Override
         public Object invoke(Object proxy, Method method,
                              Object[] args) throws Throwable {
+            extendedChar = "";
             if ((proxy == null) || (method == null) || ((args == null) && (method.getParameterTypes().length != 0))) {
                 throw new RuntimeException("Some args are null");
             } else {
                 builder.append("\n");
 
-                if (methods.contains(method)) {
-                    builder.append(method.getName()).append("(");
-                    if (args == null) {
-                        builder.append(proxy.getClass().getSimpleName()).append(".").append(method.getName());
-                    } else
+                if (methods.containsKey(method)) {
+                    builder.append(this.methods.get(method).getSimpleName()).append(".").append(method.getName()).append("(");
+                    if (args != null) {
                         for (int i = 0; i < args.length; i++) {
                             if (i != 0) {
-                                builder.append(", ");
+                                builder.append(", ").append(extendedChar);
                             }
                             try {
                                 appendObject(args[i]);
@@ -113,15 +159,20 @@ public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFac
                                 throw new RuntimeException("Can't append object in args!");
                             }
                         }
-                    builder.append(")");
+                    }
+                    builder.append(")").append(extendedChar);
                     try {
                         Object ret = method.invoke(invokeObject, args);
                         if (!(method.getReturnType().equals(void.class))) {
-                            builder.append("-->").append(ret.toString());
+                            builder.append(" returned ").append(ret.toString()).append(extendedChar);
                         }
                         return ret;
                     } catch (Exception e) {
-                        builder.append("threw ").append(e.getClass().toString()).append(" : ").append(e.getMessage());
+                        StringWriter sw = new StringWriter();
+                        PrintWriter writer = new PrintWriter(sw);
+                        e.printStackTrace(writer);
+                        builder.append(" threw ").append(e.getClass().toString()).append(" : ").
+                                append(e.getMessage()).append("\n").append(sw.toString());
                         //throw new RuntimeException("Exception when invoke!");
                     }
                 } else {
@@ -139,12 +190,14 @@ public class LoggingProxyFactory implements ru.fizteh.fivt.proxy.LoggingProxyFac
             if (!val.isInterface()) {
                 throw new RuntimeException("value is not interface");
             } else {
-                Collections.addAll(methods, val.getDeclaredMethods());
+                for (Method method : val.getDeclaredMethods()) {
+                    this.methods.put(method, val);
+                }
             }
         }
 
         return Proxy.newProxyInstance(target.getClass().getClassLoader(),
-                interfaces, new InvocationHandler(target));
+                interfaces, new InvocationHandler(target, methods));
 
     }
 
