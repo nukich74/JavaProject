@@ -29,6 +29,7 @@ public class ServerManager {
         try {
             String query = in.nextLine();
             if (query.matches("listen [0-9]{4}]")) {
+                this.serverListen(Integer.valueOf(query.split(" ")[1]));
             } else if (query.equals("/stop")) {
                 this.serverStop();
             } else if (query.equals("/list")) {
@@ -54,6 +55,7 @@ public class ServerManager {
                 serverKillUser(query.split(" ")[1]);
             } else if (query.equals("/exit")) {
                 serverStop();
+                selector.close();
                 System.exit(0);
             } else {
                 throw new RuntimeException();
@@ -110,15 +112,21 @@ public class ServerManager {
     }
 
     private void serverStop() {
+        if (address == null) {
+            return;
+        }
         try {
             for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
                 this.sendMessageToAll("Room is closed! Goodbye!", serverName);
                 this.sendMessage(pair.getValue(), MessageUtils.bye());
                 pair.getValue().close();
             }
+            userTable.clear();
+            incomingSockets.clear();
+            address = null;
         } catch (Exception e) {
             System.out.println("Error stopping server!" + e.getMessage());
-            System.out.println("Terminating server work!");
+            System.out.println("Terminating server!");
             System.exit(1);
         }
     }
@@ -144,7 +152,6 @@ public class ServerManager {
             clientStop(sc);
         }
     }
-
 
     private void processErrorMessage(SocketChannel sc, ByteBuffer buffer) {
         for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
@@ -239,7 +246,6 @@ public class ServerManager {
         throw new RuntimeException("No such client in user table!");
     }
 
-
     private void run() {
         try {
             selector = Selector.open();
@@ -256,7 +262,6 @@ public class ServerManager {
 
         }
     }
-
 
     public static void main(String[] args) {
         new ServerManager().run();
