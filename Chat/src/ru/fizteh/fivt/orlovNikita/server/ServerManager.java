@@ -47,14 +47,14 @@ public class ServerManager {
                 } else {
                     System.out.println("No such user in table!");
                 }
-            } else if (query.matches("/sendAll .*")) {
+            } else if (query.matches("/sendall .*")) {
                 String[] array = query.split(" ");
                 StringBuilder builder = new StringBuilder();
                 for (int i = 1; i < array.length; i++) {
                     builder.append(array[i]).append(" ");
                 }
                 this.sendMessageToAll(MessageUtils.message(serverName, builder.toString()));
-            } else if (query.matches("/kill")) {
+            } else if (query.matches("/kill .*")) {
                 serverKillUser(query.split(" ")[1]);
             } else if (query.equals("/exit")) {
                 serverStop();
@@ -69,7 +69,7 @@ public class ServerManager {
     }
 
     void workOutClient(SelectionKey key) throws Exception {
-        System.out.println("Working out key!");
+  //      System.out.println("Working out key!");
         if ((key.readyOps() & SelectionKey.OP_ACCEPT) == SelectionKey.OP_ACCEPT) {
             SocketChannel channel = socketChannel.accept();
             if (channel == null) {
@@ -176,9 +176,9 @@ public class ServerManager {
         ArrayList<String> messages = MessageProcessor.parseBytesToMessages(buffer.array());
         String uName = messages.get(0);
         System.out.println(uName + " sent new message to room ...");
-        for (String s : messages) {
+     /*   for (String s : messages) {
             System.out.println(s);
-        }
+        } */
         for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
             if (!pair.getKey().equals(uName)) {
                 this.sendMessage(pair.getValue(), buffer.array());
@@ -193,6 +193,7 @@ public class ServerManager {
             System.out.println("Someone tries to connect via used name!" + " " + uName);
             sendMessage(sc, MessageUtils.error("Another person has this name, please try another one."));
             sendMessage(sc, MessageUtils.bye());
+            incomingSockets.remove(sc);
             try {
                 if (sc != null) {
                     sc.close();
@@ -252,6 +253,7 @@ public class ServerManager {
                 socket.close();
                 userTable.remove(pair.getKey());
                 sendMessageToAll(MessageUtils.message(serverName, pair.getKey() + " is offline!"));
+                System.out.println(pair.getKey() + " is offline!");
                 return;
             }
         }

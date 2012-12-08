@@ -46,7 +46,7 @@ public class ClientManager {
         try {
             Set<SelectionKey> keySet = ((Selector) this.serverTable.get(curServer)[1]).selectedKeys();
             for (SelectionKey key : keySet) {
-                System.out.println("new Key!");
+               // System.out.println("new Key!");
                 if ((key.readyOps() & SelectionKey.OP_READ) == SelectionKey.OP_READ) {
                     SocketChannel sc = (SocketChannel) key.channel();
                     ByteBuffer mes = ByteBuffer.allocate(512);
@@ -57,7 +57,7 @@ public class ClientManager {
                         ArrayList<String> l = MessageProcessor.parseBytesToMessages(mes.array());
                         StringBuilder builder = new StringBuilder(l.get(0) + ": ");
 
-                        System.out.println("Got new message from " + l.get(0));
+             //           System.out.println("Got new message from " + l.get(0));
                         for (int i = 1; i < l.size(); ++i) {
                             builder.append(l.get(i));
                         }
@@ -68,7 +68,7 @@ public class ClientManager {
                         ArrayList<String> l = MessageProcessor.parseBytesToMessages(mes.array());
                         StringBuilder builder = new StringBuilder();
                         for (String aL : l) {
-                            builder.append(aL);
+                            builder.append(aL).append(" ");
                         }
                         System.out.println("Error: " + builder.toString());
                     }
@@ -119,8 +119,8 @@ public class ClientManager {
                 for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
                     System.out.println(pair.getKey().getHostString() + ":" + pair.getKey().getPort());
                 }
-            } else if (query.equals("/use")) {
-                String[] array = query.split(" :");
+            } else if (query.matches("/use .*")) {
+                String[] array = query.split("[ :]");
                 InetSocketAddress goTo = new InetSocketAddress(array[1], Integer.valueOf(array[2]));
                 if (serverTable.containsKey(goTo)) {
                     curServer = goTo;
