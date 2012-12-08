@@ -34,15 +34,17 @@ public final class MessageProcessor {
     }
 
     public static ArrayList<String> parseBytesToMessages(byte[] input) {
-            ArrayList<String> res = new ArrayList<String>();
-            ByteBuffer buffer = ByteBuffer.wrap(input);
-            buffer.get();
-            for(int i = 0; i < buffer.get(); ++i) {
-                byte[] newMessage = new byte[buffer.getInt()];
-                buffer.get(newMessage);
-                res.add(new String(newMessage));
-            }
-            return res;
+        ArrayList<String> res = new ArrayList<String>();
+        ByteBuffer buffer = ByteBuffer.wrap(input);
+        buffer.get();
+        int len = buffer.get();
+        for (int i = 0; i < len; i++) {
+            int messageLen = buffer.getInt();
+            byte[] mes = new byte[messageLen];
+            buffer.get(mes);
+            res.add(new String(mes));
+        }
+        return res;
     }
 
 }

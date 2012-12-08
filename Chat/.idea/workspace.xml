@@ -29,7 +29,7 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/MessageProcessor.java" line="15" class="ru.fizteh.fivt.orlovNikita.MessageProcessor" package="ru.fizteh.fivt.orlovNikita">
+      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java" line="89" class="ru.fizteh.fivt.orlovNikita.server.ServerManager" package="ru.fizteh.fivt.orlovNikita.server">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -42,7 +42,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" line="53" class="ru.fizteh.fivt.orlovNikita.client.ClientManager" package="ru.fizteh.fivt.orlovNikita.client">
+      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/MessageProcessor.java" line="36" class="ru.fizteh.fivt.orlovNikita.MessageProcessor" package="ru.fizteh.fivt.orlovNikita">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -99,7 +99,7 @@
       <file leaf-file-name="ClientManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="58" selection-start="3442" selection-end="3442" vertical-scroll-proportion="0.0">
+            <state line="76" column="27" selection-start="3126" selection-end="3126" vertical-scroll-proportion="-18.6">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -119,7 +119,7 @@
       <file leaf-file-name="ServerManager.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="225" column="13" selection-start="9193" selection-end="9193" vertical-scroll-proportion="0.8998331">
+            <state line="43" column="61" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.17529215">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#752#767#0" expanded="true" />
@@ -136,10 +136,10 @@
       <file leaf-file-name="MessageProcessor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/MessageProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="0" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0">
+            <state line="50" column="21" selection-start="1556" selection-end="1556" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#372#380#0" expanded="true" />
-                <element signature="e#1203#1211#0" expanded="true" />
+                <element signature="e#1199#1207#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -576,11 +576,11 @@
   <component name="RunManager" selected="Application.ClientManager">
     <configuration default="false" name="ServerManager" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="ru.fizteh.fivt.orlovNikita.server.ServerManager" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
@@ -813,7 +813,11 @@
       <created>1354977764883</created>
       <updated>1354977764883</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="test3">
+      <created>1355000645559</created>
+      <updated>1355000645559</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -834,9 +838,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297953" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3995451" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21986353" sideWeight="0.66346157" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21986353" sideWeight="0.67467946" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39903846" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33653846" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3253205" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297953" sideWeight="0.67147434" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -880,7 +884,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="test2" />
+    <option name="LAST_COMMIT_MESSAGE" value="test3" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -904,6 +908,7 @@
     <MESSAGE value="moremoremoremore" />
     <MESSAGE value="test" />
     <MESSAGE value="test2" />
+    <MESSAGE value="test3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -937,12 +942,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///usr/lib/jvm/java-7-oracle/jre/lib/rt.jar!/sun/nio/ch/EPollArrayWrapper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="19" selection-start="2265" selection-end="2265" vertical-scroll-proportion="0.6143959">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/MessageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0">
+        <state line="50" column="21" selection-start="1556" selection-end="1556" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#372#380#0" expanded="true" />
-            <element signature="e#1203#1211#0" expanded="true" />
+            <element signature="e#1199#1207#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -954,16 +966,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/lib/jvm/java-7-oracle/jre/lib/rt.jar!/sun/nio/ch/EPollArrayWrapper.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="19" selection-start="2265" selection-end="2265" vertical-scroll-proportion="0.6143959">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="58" selection-start="3442" selection-end="3442" vertical-scroll-proportion="0.0">
+        <state line="76" column="27" selection-start="3126" selection-end="3126" vertical-scroll-proportion="-18.6">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -972,7 +977,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="225" column="13" selection-start="9193" selection-end="9193" vertical-scroll-proportion="0.8998331">
+        <state line="43" column="61" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.17529215">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#752#767#0" expanded="true" />

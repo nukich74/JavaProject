@@ -36,22 +36,22 @@ public class ServerManager {
                 this.serverStop();
             } else if (query.equals("/list")) {
                 this.serverList();
-            } else if (query.matches("/send")) {
+            } else if (query.matches("/send .* .*")) {
                 String[] array = query.split(" ");
                 if (userTable.containsKey(array[1])) {
                     StringBuilder builder = new StringBuilder();
-                    for (String s : array) {
-                        builder.append(s);
+                    for (int i = 1; i < array.length; i++) {
+                        builder.append(array[i]).append(" ");
                     }
                     sendMessage(userTable.get(array[1]), MessageUtils.message(serverName, builder.toString()));
                 } else {
                     System.out.println("No such user in table!");
                 }
-            } else if (query.equals("/sendAll")) {
+            } else if (query.matches("/sendAll .*")) {
                 String[] array = query.split(" ");
                 StringBuilder builder = new StringBuilder();
                 for (int i = 1; i < array.length; i++) {
-                    builder.append(array[i]);
+                    builder.append(array[i]).append(" ");
                 }
                 this.sendMessageToAll(MessageUtils.message(serverName, builder.toString()));
             } else if (query.matches("/kill")) {
@@ -126,6 +126,7 @@ public class ServerManager {
                 this.sendMessage(pair.getValue(), MessageUtils.bye());
                 pair.getValue().close();
             }
+            this.socketChannel.close();
             userTable.clear();
             incomingSockets.clear();
             address = null;
@@ -175,12 +176,15 @@ public class ServerManager {
         ArrayList<String> messages = MessageProcessor.parseBytesToMessages(buffer.array());
         String uName = messages.get(0);
         System.out.println(uName + " sent new message to room ...");
+        for (String s : messages) {
+            System.out.println(s);
+        }
         for (Map.Entry<String, SocketChannel> pair : userTable.entrySet()) {
             if (!pair.getKey().equals(uName)) {
                 this.sendMessage(pair.getValue(), buffer.array());
             }
         }
-        this.sendMessageToAll(buffer.array());
+   //     this.sendMessageToAll(buffer.array());
     }
 
     private void processHelloMessage(SocketChannel sc, ByteBuffer buffer) throws Exception {
@@ -199,7 +203,7 @@ public class ServerManager {
         } else {
             System.out.println("We have new user: " + uName);
             sendMessageToAll(MessageUtils.message(serverName, uName + " connected to server"));
-            sendMessage(sc, MessageUtils.message("Welcome to room: " + address.getPort(), serverName));
+            sendMessage(sc, MessageUtils.message(serverName, "Welcome to room: " + address.getPort()));
             userTable.put(uName, sc);
             incomingSockets.remove(sc);
         }
@@ -215,14 +219,11 @@ public class ServerManager {
         try {
             if (socket.isConnected()) {
                 ByteBuffer bf = ByteBuffer.wrap(message);
-                socket.write(bf);
+                int res = socket.write(bf);
+                System.out.println("Sent to clients byte: " + res);
             }
         } catch (Exception e) {
-            try {
-                clientStop(socket);
-            } catch (Exception e1) {
-                System.out.println("Server error! Stopping server:" + e1.getMessage());
-            }
+
         }
     }
 
@@ -252,8 +253,6 @@ public class ServerManager {
                 userTable.remove(pair.getKey());
                 sendMessageToAll(MessageUtils.message(serverName, pair.getKey() + " is offline!"));
                 return;
-            } else {
-                continue;
             }
         }
         if (incomingSockets.contains(socket)) {

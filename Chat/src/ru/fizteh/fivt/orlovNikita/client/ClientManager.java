@@ -13,6 +13,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ClientManager {
     private String clientName;
@@ -43,8 +44,10 @@ public class ClientManager {
 
     private void workOutServer() {
         try {
-            for (SelectionKey key : ((Selector) this.serverTable.get(curServer)[1]).selectedKeys()) {
-                if (key.isReadable()) {
+            Set<SelectionKey> keySet = ((Selector) this.serverTable.get(curServer)[1]).selectedKeys();
+            for (SelectionKey key : keySet) {
+                System.out.println("new Key!");
+                if ((key.readyOps() & SelectionKey.OP_READ) == SelectionKey.OP_READ) {
                     SocketChannel sc = (SocketChannel) key.channel();
                     ByteBuffer mes = ByteBuffer.allocate(512);
                     if (sc.read(mes) == -1) {
@@ -53,6 +56,8 @@ public class ClientManager {
                     if (mes.array()[0] == 2) {
                         ArrayList<String> l = MessageProcessor.parseBytesToMessages(mes.array());
                         StringBuilder builder = new StringBuilder(l.get(0) + ": ");
+
+                        System.out.println("Got new message from " + l.get(0));
                         for (int i = 1; i < l.size(); ++i) {
                             builder.append(l.get(i));
                         }
@@ -62,13 +67,14 @@ public class ClientManager {
                     } else if (mes.array()[0] == 127) {
                         ArrayList<String> l = MessageProcessor.parseBytesToMessages(mes.array());
                         StringBuilder builder = new StringBuilder();
-                        for (int i = 0; i < l.size(); ++i) {
-                            builder.append(l.get(i));
+                        for (String aL : l) {
+                            builder.append(aL);
                         }
                         System.out.println("Error: " + builder.toString());
                     }
                 }
             }
+            keySet.clear();
         } catch (Exception e) {
             System.out.println("Error while working out server! " + e.getMessage());
         }
@@ -96,24 +102,24 @@ public class ClientManager {
             String query = in.readLine();
             if (query.matches("/connect [0-9a-zA-Z]*:[0-9]*")) {
                 connectToServer(query.split(" ")[1].split(":")[0], query.split(" ")[1].split(":")[1]);
-            } else if (query.equals("disconnect")) {
+            } else if (query.equals("/disconnect")) {
                 if (this.curServer == null) {
                     System.out.println("You are not connected!");
                 } else {
                     this.disconnect(curServer);
                 }
-            } else if (query.equals("whereami")) {
+            } else if (query.equals("/whereami")) {
                 if (this.curServer != null) {
                     System.out.println(curServer.getHostString() + ":" + curServer.getPort());
                 } else {
                     System.out.println("You are not in any room!");
                 }
-            } else if (query.equals("list")) {
+            } else if (query.equals("/list")) {
                 System.out.println("Connected to:");
                 for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
                     System.out.println(pair.getKey().getHostString() + ":" + pair.getKey().getPort());
                 }
-            } else if (query.equals("use")) {
+            } else if (query.equals("/use")) {
                 String[] array = query.split(" :");
                 InetSocketAddress goTo = new InetSocketAddress(array[1], Integer.valueOf(array[2]));
                 if (serverTable.containsKey(goTo)) {
@@ -121,17 +127,17 @@ public class ClientManager {
                 } else {
                     System.out.println("Can't go, because not connected!");
                 }
-            } else if (query.equals("exit")) {
+            } else if (query.equals("/exit")) {
                 for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
                     disconnect(pair.getKey());
                 }
                 System.exit(0);
-            } else if (query.equals("disconnect")) {
+            } else if (query.equals("/disconnect")) {
                 if (curServer != null) {
                     disconnect(curServer);
                 }
-            }
-            if (curServer != null) {
+            } else if (curServer != null) {
+                System.out.println("New query: " + query);
                 sendMessage((SocketChannel) serverTable.get(curServer)[0], MessageUtils.message(this.clientName, query));
             }
 
