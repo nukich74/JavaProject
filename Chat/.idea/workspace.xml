@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="49524de7-c7ae-4e2c-b1bc-dfb27b87bb49" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../Proxy/src/ru/fizteh/fivt/proxy/LoggingProxyFactory.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" afterPath="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Proxy/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Proxy/.idea/workspace.xml" />
     </list>
     <ignored path="Chat.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,7 +41,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" line="123" class="ru.fizteh.fivt.orlovNikita.client.ClientManager" package="ru.fizteh.fivt.orlovNikita.client">
+      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" line="83" class="ru.fizteh.fivt.orlovNikita.client.ClientManager" package="ru.fizteh.fivt.orlovNikita.client">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -53,7 +54,33 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" line="83" class="ru.fizteh.fivt.orlovNikita.client.ClientManager" package="ru.fizteh.fivt.orlovNikita.client">
+      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" line="134" class="ru.fizteh.fivt.orlovNikita.client.ClientManager" package="ru.fizteh.fivt.orlovNikita.client">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" line="101" class="ru.fizteh.fivt.orlovNikita.client.ClientManager" package="ru.fizteh.fivt.orlovNikita.client">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" line="154" class="ru.fizteh.fivt.orlovNikita.client.ClientManager" package="ru.fizteh.fivt.orlovNikita.client">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -106,7 +133,17 @@
     <favorites_list name="Chat" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="ClientManager.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="153" column="32" selection-start="6556" selection-end="6556" vertical-scroll-proportion="0.6981132">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -142,9 +179,9 @@
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/chat/MessageProcessor.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/newClient.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/MessageProcessor.java" />
+        <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/tested requests" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java" />
         <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java" />
-        <option value="$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/tested requests" />
       </list>
     </option>
   </component>
@@ -372,6 +409,20 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -407,19 +458,79 @@
               <option name="myItemId" value="fivt" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orlovNikita" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Chat" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Chat" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fivt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orlovNikita" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fivt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="orlovNikita" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fivt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -447,9 +558,9 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -482,7 +593,7 @@
     <configuration default="false" name="ClientManager" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="ru.fizteh.fivt.orlovNikita.client.ClientManager" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="user1" />
+      <option name="PROGRAM_PARAMETERS" value="user0" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -713,14 +824,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1366" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.84294873" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297953" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25928733" sideWeight="0.67147434" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24943139" sideWeight="0.67467946" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36698717" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38301283" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -729,13 +839,14 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21986353" sideWeight="0.21634616" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297953" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3995451" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21986353" sideWeight="0.67467946" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39903846" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3253205" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21986353" sideWeight="0.67467946" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3253205" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297953" sideWeight="0.67147434" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39903846" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -823,80 +934,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/chat/MessageType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="20" selection-start="174" selection-end="185" vertical-scroll-proportion="0.23857868">
-          <folding />
-        </state>
+        <state line="10" column="20" selection-start="174" selection-end="185" vertical-scroll-proportion="0.23857868" />
       </provider>
     </entry>
     <entry file="jar:///usr/lib/jvm/java-7-oracle/src.zip!/java/io/FileInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="245" column="26" selection-start="8974" selection-end="8974" vertical-scroll-proportion="0.53513515">
-          <folding />
-        </state>
+        <state line="245" column="26" selection-start="8974" selection-end="8974" vertical-scroll-proportion="0.53513515" />
       </provider>
     </entry>
     <entry file="jar:///usr/lib/jvm/java-7-oracle/jre/lib/rt.jar!/sun/nio/ch/EPollArrayWrapper.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="19" selection-start="2265" selection-end="2265" vertical-scroll-proportion="0.6143959">
-          <folding />
-        </state>
+        <state line="67" column="19" selection-start="2265" selection-end="2265" vertical-scroll-proportion="0.6143959" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/MessageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="1527" selection-end="1527" vertical-scroll-proportion="0.6212121">
-          <folding>
-            <element signature="e#372#380#0" expanded="true" />
-            <element signature="e#1199#1207#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/tested requests">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="1" selection-start="986" selection-end="986" vertical-scroll-proportion="0.79545456">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="255" column="65" selection-start="10398" selection-end="10398" vertical-scroll-proportion="0.7574124">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#752#767#0" expanded="true" />
-            <element signature="method#ServerManager#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#interpretConsole#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#serverListen#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#serverStop#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#serverList#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#serverKillUser#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#badCaseOfMessage#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#processErrorMessage#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#processToRoomMessage#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#processHelloMessage#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#sendMessageToAll#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#sendMessage#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#getMessageFromSocket#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#run#0;class#ServerManager#0" expanded="false" />
-            <element signature="method#main#0;class#ServerManager#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="46" column="0" selection-start="1527" selection-end="1527" vertical-scroll-proportion="0.6212121" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/chat/MessageUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="21" selection-start="734" selection-end="734" vertical-scroll-proportion="0.72727275">
+        <state line="31" column="21" selection-start="734" selection-end="734" vertical-scroll-proportion="0.72727275" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/tested requests">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="1" selection-start="986" selection-end="986" vertical-scroll-proportion="0.52587646" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/server/ServerManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="40" selection-start="1121" selection-end="1121" vertical-scroll-proportion="0.36944443">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/fizteh/fivt/orlovNikita/client/ClientManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1106" selection-end="1106" vertical-scroll-proportion="0.30997303">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="153" column="32" selection-start="6556" selection-end="6556" vertical-scroll-proportion="0.6981132">
+          <folding />
         </state>
       </provider>
     </entry>

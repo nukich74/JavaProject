@@ -100,7 +100,7 @@ public class ClientManager {
     private void interpretConsole() {
         try {
             String query = in.readLine();
-            if (query.matches("/connect [0-9a-zA-Z]*:[0-9]*")) {
+            if (query.matches("/connect [0-9a-zA-Z\\.]*:[0-9]*")) {
                 connectToServer(query.split(" ")[1].split(":")[0], query.split(" ")[1].split(":")[1]);
             } else if (query.equals("/disconnect")) {
                 if (this.curServer == null) {
@@ -152,16 +152,20 @@ public class ClientManager {
             if (this.serverTable.containsKey(newAddress)) {
                 System.out.println("User is already connected to this server!");
             } else {
-                serverTable.put(newAddress, new Object[]{SocketChannel.open(), Selector.open()});
-                ((SocketChannel) serverTable.get(newAddress)[0]).connect(newAddress);
-                ((SocketChannel) serverTable.get(newAddress)[0]).configureBlocking(false);
-                ((SocketChannel) serverTable.get(newAddress)[0]).
-                        register((Selector) serverTable.get(newAddress)[1], SelectionKey.OP_READ);
+                Object[] newSocket = new Object[]{SocketChannel.open(), Selector.open()};
+                ((SocketChannel) newSocket[0]).connect(newAddress);
+                ((SocketChannel) newSocket[0]).configureBlocking(false);
+                ((SocketChannel) newSocket[0]).
+                        register((Selector) newSocket[1], SelectionKey.OP_READ);
+                serverTable.put(newAddress, newSocket);
                 curServer = newAddress;
                 sendMessage(((SocketChannel) serverTable.get(newAddress)[0]), MessageUtils.hello(this.clientName));
             }
         } catch (Exception e) {
             System.out.println("Error of connecting to server!");
+            for (Map.Entry<InetSocketAddress, Object[]> pair : serverTable.entrySet()) {
+                disconnect(pair.getKey());
+            }
             System.exit(1);
         }
 
@@ -182,7 +186,7 @@ public class ClientManager {
 
     public static void main(String[] args) {
         try {
-            if (args == null) {
+            if (args.length == 0) {
                 throw new RuntimeException("When launch give your name as 1st param!");
             } else {
                 ClientManager manager = new ClientManager(args[0]);
